@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"../../../../mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dmis.sys.dao.UserDao">
+	
+	<!-- 账号登录 -->
+	<select id="login" parameterType="User" resultType="User">
+		select * from user where username=#{username} and pwd=#{pwd}
+	</select>
+
+	<!-- 根据用户名获得用户 -->
+	<select id="getUserByUsername" parameterType="java.lang.String" resultType="user">
+		select * from user where username=#{username}
+	</select>
+</mapper>	

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"../../../../mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dmis.sys.dao.MenuDao">
+	
+	<!-- 账号登录 -->
+	<select id="getMenuByUid" parameterType="java.lang.Long" resultType="menu">
+		select m.* from user_role ur
+		left join role_menu rm on rm.rid=ur.rid 
+		left join menu m on m.id=rm.mid 
+		where ur.uid=#{uid}
+	</select>
+
+</mapper>	
