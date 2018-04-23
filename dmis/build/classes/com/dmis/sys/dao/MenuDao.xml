@@ -12,5 +12,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		left join menu m on m.id=rm.mid 
 		where ur.uid=#{uid}
 	</select>
+	
+	
+	<select id="getMenusQuery"  resultType="menu">
+		select * from menu
+	</select>
 
 </mapper>	

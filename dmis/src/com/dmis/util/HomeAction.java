@@ -5,7 +5,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 /**
  * 跳转controller
@@ -46,5 +45,31 @@ public class HomeAction {
 		System.out.println("user");
 		
 		return "sys/user";
+	}
+	
+	
+	/**
+	 * 菜单管理
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping("/menu")
+	public String menu(HttpServletRequest request, HttpServletResponse response){
+		
+		return "sys/menu";
+	}
+	
+	
+	/**
+	 * 角色管理
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping("/role")
+	public String role(HttpServletRequest request, HttpServletResponse response){
+		
+		return "sys/role";
 	}
 }

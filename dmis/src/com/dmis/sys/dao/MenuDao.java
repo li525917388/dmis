@@ -17,4 +17,11 @@ public interface MenuDao {
 	 * @return
 	 */
 	public List<Menu> getMenuByUid(long uid);
+	
+	
+	/**
+	 * 获得菜单列表
+	 * @return
+	 */
+	public List<Menu> getMenusQuery();
 }

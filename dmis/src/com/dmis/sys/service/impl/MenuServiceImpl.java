@@ -59,4 +59,10 @@ public class MenuServiceImpl implements MenuService {
 		return res;
 	}
 
+	@Override
+	public List<Menu> getMenusQuery() {
+		
+		return menuDao.getMenusQuery();
+	}
+
 }

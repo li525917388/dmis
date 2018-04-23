@@ -12,8 +12,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.dmis.sys.entity.Menu;
 import com.dmis.sys.service.MenuService;
+import com.dmis.util.GridView;
+import com.dmis.util.Result;
 
 import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 
 /**
  * 菜单controller
@@ -44,6 +47,31 @@ public class MenuAction {
 		}
 		
 		String json = JSONArray.fromObject(menus).toString();
+		
+		response.getWriter().print(json);
+	}
+	
+	
+	/**
+	 * 获得菜单列表
+	 * @param request
+	 * @param response
+	 * @throws IOException
+	 */
+	@RequestMapping("getMenuList")
+	public void getMenuList(HttpServletRequest request, HttpServletResponse response) throws IOException{
+		response.setContentType("text/html;charset=utf-8");
+		
+		List<Menu> list = menuService.getMenusQuery();
+		
+		GridView grid = new GridView();
+		grid.setMaxResults(15);
+		grid.setRows(list);
+		grid.setRecords(35);
+		grid.setTotal(list.size());
+		grid.setPage(1);
+		
+		String json = JSONObject.fromObject(grid).toString();
 		
 		response.getWriter().print(json);
 	}
