@@ -72,4 +72,16 @@ public class HomeAction {
 		
 		return "sys/role";
 	}
+	
+	/**
+	 * 楼宇管理
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping("/building")
+	public String building(HttpServletRequest request, HttpServletResponse response){
+		
+		return "dorm/building";
+	}
 }
