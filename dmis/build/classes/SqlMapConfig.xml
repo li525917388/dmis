@@ -13,8 +13,8 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 	<!-- 配置包级别名 -->
  	<typeAliases>
  		<package name="com.dmis.sys.entity"/>
-  		<!-- <package name="com.muke.entity"/> -->
+		<package name="com.dmis.dorm.entity"/>
+		<package name="com.dmis.util"/>
   	</typeAliases>
-	
 	
 </configuration>

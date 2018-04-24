@@ -1,4 +1,4 @@
-package com.dmis.sys.action;
+package com.dmis.dorm.action;
 
 import java.io.IOException;
 import java.util.List;
@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.dmis.sys.entity.Building;
+import com.dmis.dorm.entity.Building;
 import com.dmis.sys.service.BuildingService;
 import com.dmis.util.GridView;
 
@@ -25,6 +25,7 @@ public class BuildingAction {
 	
 	@RequestMapping("getBuildingList")
 	public void getBuildingList(HttpServletRequest request, HttpServletResponse response) throws IOException{
+		response.setContentType("text/html;charset=utf-8");
 		
 		List<Building> list = buildingService.getListQuery();
 		

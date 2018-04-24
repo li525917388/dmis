@@ -2,7 +2,7 @@ package com.dmis.sys.service;
 
 import java.util.List;
 
-import com.dmis.sys.entity.Building;
+import com.dmis.dorm.entity.Building;
 
 /**
  * 楼宇service

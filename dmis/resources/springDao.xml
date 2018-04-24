@@ -40,7 +40,7 @@
 	
 	<!-- mapper扫描器 -->
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-	 	<property name="basePackage" value="com.dmis.sys.dao"></property>
+	 	<property name="basePackage" value="com.dmis.*.dao"></property>
 		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
 	</bean>
 	

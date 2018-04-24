@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.dmis.sys.entity.Menu;
 import com.dmis.sys.service.MenuService;
 import com.dmis.util.GridView;
-import com.dmis.util.Result;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;

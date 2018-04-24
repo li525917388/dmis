@@ -1,8 +1,8 @@
-package com.dmis.sys.dao;
+package com.dmis.dorm.dao;
 
 import java.util.List;
 
-import com.dmis.sys.entity.Building;
+import com.dmis.dorm.entity.Building;
 
 /**
  * 楼宇dao

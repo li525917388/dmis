@@ -1,4 +1,4 @@
-package com.dmis.sys.entity;
+package com.dmis.dorm.entity;
 
 /**
  * 宿舍楼宇

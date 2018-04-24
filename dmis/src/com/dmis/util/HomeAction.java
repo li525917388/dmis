@@ -84,4 +84,16 @@ public class HomeAction {
 		
 		return "dorm/building";
 	}
+	
+	/**
+	 * 宿舍管理
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping("/dormitory")
+	public String dormitory(HttpServletRequest request, HttpServletResponse response){
+		
+		return "dorm/dormitory";
+	}
 }

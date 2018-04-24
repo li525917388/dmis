@@ -6,8 +6,8 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
-import com.dmis.sys.dao.BuildingDao;
-import com.dmis.sys.entity.Building;
+import com.dmis.dorm.dao.BuildingDao;
+import com.dmis.dorm.entity.Building;
 import com.dmis.sys.service.BuildingService;
 
 @Service
