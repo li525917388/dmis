@@ -14,6 +14,7 @@ import com.dmis.dorm.entity.Building;
 import com.dmis.sys.service.BuildingService;
 import com.dmis.util.GridView;
 
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 @Controller
@@ -35,6 +36,24 @@ public class BuildingAction {
 		grid.setTotal(list.size());
 		
 		String json = JSONObject.fromObject(grid).toString();
+		
+		response.getWriter().print(json);
+	}
+	
+	/**
+	 * 
+	 * @param request
+	 * @param response
+	 * @throws IOException 
+	 */
+	@RequestMapping("getAllList")
+	public void getAllList(HttpServletRequest request, HttpServletResponse response) throws IOException{
+		
+		response.setContentType("text/html;charset=utf-8");
+		
+		List<Building> list = buildingService.getListQuery();
+		
+		String json = JSONArray.fromObject(list).toString();
 		
 		response.getWriter().print(json);
 	}

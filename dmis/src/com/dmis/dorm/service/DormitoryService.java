@@ -16,4 +16,12 @@ public interface DormitoryService {
 	 * @return
 	 */
 	public ResultAndTotal<Dormitory> searchAndTotal(PageUtil pageUtil);
+	
+	
+	/**
+	 * 新增
+	 * @param dorm
+	 * @return
+	 */
+	public long add(Dormitory dorm);
 }

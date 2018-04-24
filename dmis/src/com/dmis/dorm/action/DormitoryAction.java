@@ -56,4 +56,35 @@ public class DormitoryAction {
 		
 		response.getWriter().print(json);
 	}
+	
+	
+	/**
+	 * 编辑页面
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping("toDormitoryForm")
+	public String toDormitoryForm(HttpServletRequest request, HttpServletResponse response){
+		
+		return "dorm/form/dormitoryForm";
+	}
+	
+	
+	/**
+	 * 
+	 * @param request
+	 * @param response
+	 * @param dorm
+	 * @throws IOException 
+	 */
+	@RequestMapping("saveDorm")
+	public void saveDorm(HttpServletRequest request, HttpServletResponse response,Dormitory dorm) throws IOException{
+		
+		System.out.println(dorm.getMaxNum());
+		
+		long res = dormitoryService.add(dorm);
+		
+		response.getWriter().print(res);
+	}
 }

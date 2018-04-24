@@ -41,4 +41,12 @@ public class DormitoryServiceImpl implements DormitoryService {
 		return res;
 	}
 
+
+
+	@Override
+	public long add(Dormitory dorm) {
+		
+		return dormitoryDao.add(dorm);
+	}
+
 }

@@ -5,20 +5,32 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>Insert title here</title>
+	<link rel="stylesheet" href="${contextPath}/static/layer/mobile/need/layer.css">
 	<link rel="stylesheet" href="${contextPath}/static/hplus/js/table/bootstrap.min.css">
-	<link rel="stylesheet" href="${contextPath}/static/js/bootstrap-dialog.min.css">
+	<%-- <link rel="stylesheet" href="${contextPath}/static/js/bootstrap-dialog.min.css"> --%>
 	<link rel="stylesheet" href="${contextPath}/static/hplus/js/table/bootstrap-table.css">
+	
+	
 	<script src="${contextPath}/static/hplus/js/table/jquery-3.1.1.min.js"></script>
+	<script src="${contextPath}/static/layer/layer.js"></script>
 	<script src="${contextPath}/static/hplus/js/table/bootstrap.min.js"></script>
 	<script src="${contextPath}/static/hplus/js/table/bootstrap-table.js"></script>
 	<script src="${contextPath}/static/hplus/js/table/bootstrap-table-zh-CN.js"></script>
-	<script src="${contextPath}/static/js/bootstrap-dialog.min.js"></script>
+	<%-- <script src="${contextPath}/static/js/bootstrap-dialog.min.js"></script> --%>
+
+	
 
 </head>
 <body>
 	<div id="dormitory_search" style="margin: 5px 0px">
+		
+		<button onclick="addDormitoryClick()">新增</button>
+		<button>修改</button>
+		<button>删除</button>
+		<button>查看</button>
+		
 		楼宇：
 		<select id="dormitory_buildId">
 			
@@ -32,8 +44,44 @@
 
 </body>
 <script type="text/javascript">
+
+	//加载楼宇
+	$.ajax({
+		url: "${contextPath}/dorm/building/getAllList",
+		type: "get",
+		dataType: "json",
+		success: function(res){
+			var html = "";
+			
+			for(var i in res){
+				
+				html += "<option value='"+ res[i].id +"'>" + res[i].name + "</option>";
+			}
+			
+			$("#dormitory_buildId").html(html);
+		}
+	});
+	
+	
+	//新增
+	function addDormitoryClick(){
+		
+		layer.open({
+			type: 2,
+			title: '新增',
+			shadeClose: true,
+			shade: false,
+			closeBtn: 1,
+			maxmin: true, //开启最大化最小化按钮
+			area: ['800px', '400px'],
+			content: '${contextPath}/dorm/dormitory/toDormitoryForm'
+		});
+	}
+	
+	
 	//刷新
 	function dormitorySearchBtn(){
+		
 		$("#dormitory_table").bootstrapTable("refresh","${contextPath}/dorm/dormitory/getDormitoryList");
 	}
 	

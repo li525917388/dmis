@@ -23,4 +23,12 @@ public interface DormitoryDao {
 	 * @return
 	 */
 	public int getTotalQuery(PageUtil pageUtil);
+	
+	
+	/**
+	 * 新增
+	 * @param dorm
+	 * @return
+	 */
+	public long add(Dormitory dorm);
 }
