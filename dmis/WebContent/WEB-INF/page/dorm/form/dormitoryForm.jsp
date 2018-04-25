@@ -17,46 +17,53 @@
 </head>
 <body>
 	<form id="dormitoryForm" class="form-horizontal" role="form">
-		<input id="dormitoryId" type="hidden">
+		<input id="dormitoryId" type="hidden" value="${dormitory.id }">
+		<input id="oper" type="hidden" value="${oper }">
+		
 		<div class="form-group">
 		  	<label class="col-sm-3 control-label">楼宇</label>
 		  	<div class="col-sm-8">
 	    		<select id="buildId" class="form-control">
 	        		
 	      		</select>
+	      		<input type="hidden" id="buildIdHid" value="${dormitory.buildId }">
 	  		</div>
 		</div>
 		
 		<div class="form-group">
-		  <label for="dormNo" class="col-sm-3 control-label">宿舍号</label>
-		  <div class="col-sm-8">
-		    <input class="form-control" id="dormNo" type="text" placeholder="如：620" >
-		  </div>
+			<label for="dormNo" class="col-sm-3 control-label">宿舍号</label>
+		  	<div class="col-sm-8">
+		    	<input class="form-control" id="dormNo" type="text" value="${dormitory.dormNo }" placeholder="如：620" >
+		  	</div>
 		</div>
 		
-		  <div class="form-group">
+		<div class="form-group">
 		    <label for="maxNum" class="col-sm-3 control-label">最大床位</label>
 		    <div class="col-sm-8">
-		      <input type="text" id="maxNum" class="form-control" placeholder="如：8">
+		      	<input type="text" id="maxNum" class="form-control" value="${dormitory.maxNum }" placeholder="如：8">
 		    </div>
-		  </div>
-		  <div class="form-group">
+		</div>
+		<div class="form-group">
 		    <label for="dormSex" class="col-sm-3 control-label">性别</label>
 		    <div class="col-sm-8">
-		      <select id="dormSex" class="form-control">
-		        <option value="1">男宿</option>
-		        <option value="2">女宿</option>
-		      </select>
+		      	<select id="dormSex" class="form-control">
+		        	<option value="1">男宿</option>
+		        	<option value="2">女宿</option>
+		        
+		      	</select>
+		      	<input type="hidden" id="dormSexHid" value="${dormitory.dormSex }">
 		    </div>
-		  </div>
+		</div>
 		
 		
 		<div class="form-group has-error">
-		  <label class="col-sm-3 control-label" for="inputError"></label>
-		  <div class="col-sm-8">
-		    <button type="button" onclick="submitClick()" class="btn btn-success">提交</button>
-		    <button type="button" onclick="closeClick()" class="btn btn-default">取消</button>
-		  </div>
+			<label class="col-sm-3 control-label" for="inputError"></label>
+			<div class="col-sm-8">
+				<c:if test="${oper != 'view' }">
+					<button type="button" onclick="submitClick()" class="btn btn-success">提交</button>
+				</c:if>
+				<button type="button" onclick="closeClick()" class="btn btn-default">取消</button>
+			</div>
 		  
 		</div>
 		
@@ -69,6 +76,7 @@ $.ajax({
 	url: "${contextPath}/dorm/building/getAllList",
 	type: "get",
 	dataType: "json",
+	async: false,
 	success: function(res){
 		var html = "";
 		
@@ -82,6 +90,20 @@ $.ajax({
 });
 
 
+//初始化
+var oper = $("#oper").val();
+if(oper == "view" || oper == "edit"){
+	
+	$("#buildId").val($("#buildIdHid").val());
+	$("#dormSex").val($("#dormSexHid").val());
+	
+	if(oper == "view"){
+		$("input").attr("disabled","disabled");
+		$("select").attr("disabled","disabled");
+	}
+}
+
+//提交
 function submitClick(){
 	$.ajax({
 		url: "${contextPath}/dorm/dormitory/saveDorm",
@@ -97,8 +119,12 @@ function submitClick(){
 			
 			if(res != 0){
 				
-				layer.msg("添加成功");
+				layer.msg("操作成功");
 				parent.$("#dormitory_table").bootstrapTable("refresh","${contextPath}/dorm/dormitory/getDormitoryList");
+				setTimeout(function(){
+					closeClick();
+				},1200);
+				
 			}
 		}
 	});

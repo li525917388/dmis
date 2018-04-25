@@ -3,11 +3,10 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "../../../../mybatis-3-mapper.dtd">
 
-<mapper namespace="com.dmis.dorm.dao.DormitoryDao">
+<mapper namespace="com.dmis.dorm.dao.BedDao">
 	
-	<select id="getListQuery" parameterType="pageUtil" resultType="dormitory">
-		select d.*,b.name as buildName from dormitory d 
-		left join building b on b.id=d.buildId 
+	<select id="getBedListQuery" parameterType="pageUtil" resultType="bed">
+		select *  from bed 
 		where 1=1 
 		<foreach collection="where" item="wh">
 			and ${wh.parm} ${wh.op} #{wh.value} 
@@ -17,8 +16,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<!-- 获得最大数 -->
-	<select id="getTotalQuery" parameterType="pageUtil"  resultType="Integer">
-		select count(*) from dormitory
+	<select id="getBedTotalQuery" parameterType="pageUtil"  resultType="Integer">
+		select count(*) from bed
 		
 		where 1=1 
 		<foreach collection="where" item="wh">

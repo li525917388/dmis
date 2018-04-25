@@ -67,12 +67,24 @@ public class DormitoryAction {
 	@RequestMapping("toDormitoryForm")
 	public String toDormitoryForm(HttpServletRequest request, HttpServletResponse response){
 		
+		String id = request.getParameter("id");
+		String oper = request.getParameter("oper");
+		
+		if("edit".equals(oper) || "view".equals(oper)){
+			
+			Dormitory dorm = dormitoryService.getEntity(Long.valueOf(id));
+			
+			request.setAttribute("dormitory", dorm);
+			request.setAttribute("oper", oper);
+			
+		}
+		
 		return "dorm/form/dormitoryForm";
 	}
 	
 	
 	/**
-	 * 
+	 * 保存
 	 * @param request
 	 * @param response
 	 * @param dorm
@@ -83,7 +95,20 @@ public class DormitoryAction {
 		
 		System.out.println(dorm.getMaxNum());
 		
-		long res = dormitoryService.add(dorm);
+		long res = dormitoryService.save(dorm);
+		
+		response.getWriter().print(res);
+	}
+	
+	@RequestMapping("delDorm")
+	public void delDorm(HttpServletRequest request, HttpServletResponse response,String ids) throws IOException{
+		
+		int res = 0;
+		
+		if(ids.length() > 1){
+			
+			res = dormitoryService.dels(ids.substring(0, ids.length() - 1));
+		}
 		
 		response.getWriter().print(res);
 	}

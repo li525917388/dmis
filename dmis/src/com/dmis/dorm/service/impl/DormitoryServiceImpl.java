@@ -1,5 +1,8 @@
 package com.dmis.dorm.service.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
@@ -44,9 +47,49 @@ public class DormitoryServiceImpl implements DormitoryService {
 
 
 	@Override
-	public long add(Dormitory dorm) {
+	public long save(Dormitory dorm) {
 		
-		return dormitoryDao.add(dorm);
+		if(dorm.getId() == null){
+			
+			return dormitoryDao.add(dorm);
+		}else{
+			
+			return dormitoryDao.update(dorm);
+		}
+		
+	}
+
+
+
+	@Override
+	public Dormitory getEntity(long id) {
+		
+		return dormitoryDao.getEntity(id);
+	}
+
+
+
+	@Override
+	public int del(long id) {
+
+		return 1;
+	}
+
+
+
+	@Override
+	public int dels(String ids) {
+		
+		List<Long> list = new ArrayList<Long>();
+		
+		String[] array = ids.split(",");
+		
+		for(String s : array){
+			
+			list.add(Long.valueOf(s));
+		}
+		
+		return dormitoryDao.del(list);
 	}
 
 }

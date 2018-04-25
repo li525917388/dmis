@@ -6,7 +6,7 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>Insert title here</title>
+	<title>宿舍分配</title>
 	<link rel="stylesheet" href="${contextPath}/static/layer/mobile/need/layer.css">
 	<link rel="stylesheet" href="${contextPath}/static/hplus/js/table/bootstrap.min.css">
 	<%-- <link rel="stylesheet" href="${contextPath}/static/js/bootstrap-dialog.min.css"> --%>
@@ -25,11 +25,6 @@
 </head>
 <body>
 	<div id="dormitory_search" style="margin: 5px 0px">
-		
-		<button onclick="addDormitoryClick()">新增</button>
-		<button onclick="editDormitoryClick('edit')">修改</button>
-		<button onclick="delDormitoryClick()">删除</button>
-		<button onclick="editDormitoryClick('view')">查看</button>
 		
 		楼宇：
 		<select id="dormitory_buildId">
@@ -78,75 +73,7 @@
 	}
 	
 	
-	//编辑
-	function editDormitoryClick(oper){
-		
-		var ids = $("#dormitory_table").bootstrapTable("getSelections");
-		
-		if(ids.length == 1){
-			
-			layer.open({
-				type: 2,
-				title: '新增',
-				shadeClose: true,
-				shade: false,
-				closeBtn: 1,
-				maxmin: true, //开启最大化最小化按钮
-				area: ['800px', '400px'],
-				content: '${contextPath}/dorm/dormitory/toDormitoryForm?oper='+ oper +'&id='+ ids[0].id
-			});
-		}else{
-			
-			layer.msg("请选择一条数据");
-		}
-	}
 	
-	
-	//删除
-	function delDormitoryClick(){
-		var selects = $("#dormitory_table").bootstrapTable("getSelections");
-		
-		if(selects.length > 0){
-			
-			//询问框
-			layer.confirm('是否删除数据？', {
-				btn: ['确定','取消'] //按钮
-			}, function(){
-				var ids = "";
-				
-				for(var i in selects){
-					
-					ids += selects[i].id + ",";
-				}
-				
-				//删除请求
-				$.ajax({
-					url: "${contextPath}/dorm/dormitory/delDorm",
-					type: "post",
-					data: {oper:'del', ids:ids},
-					success: function(res){
-						
-						if(res != 0){
-							
-							layer.msg("删除成功");
-							dormitorySearchBtn();
-						}else{
-							layer.msg("删除失败");
-						}
-					}
-				});
-				
-			}, function(){
-				
-			});
-			
-			
-			
-		}else{
-			
-			layer.msg("至少选择一条数据");
-		}
-	}
 	
 	
 	//刷新
@@ -198,12 +125,12 @@
 			{field: 'dormNo', title: '宿舍号'},
 			{field: 'dormSex', title: '性别',
 				formatter:function(value,row,index){
-					return value==1 ? '男' : '女';
+					return value==1 ? '<span class="label label-success">男</span>' : '<span class="label label-warning">女</span>';
 				},
 			},
 			{title: '操作',field: 'id',align: 'center',
 				formatter:function(value,row,index){  
-					var e = '<a onclick="edit(\''+ row.id +'\')">编辑</a> ';  
+					var e = '<i class="fa fa-home">1</i>';  
 					var d = '<a onclick="deletes(\''+ row.id +'\')">删除</a> ';  
 					var d = '<a onclick="addCourse(\''+ row.id +'\')">添加</a> ';  
 					return e+d;  

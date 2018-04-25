@@ -31,4 +31,33 @@ public interface DormitoryDao {
 	 * @return
 	 */
 	public long add(Dormitory dorm);
+	
+	
+	/**
+	 * 修改
+	 * @param dorm
+	 * @return
+	 */
+	public long update(Dormitory dorm);
+	
+	/**
+	 * 查看
+	 * @param dorm
+	 * @return
+	 */
+	public Dormitory getEntity(long id);
+	
+	/**
+	 * 批量删除
+	 * @param dorm
+	 * @return
+	 */
+	public int del(List<Long> list);
+	
+	/**
+	 * 批量删除
+	 * @param dorm
+	 * @return
+	 */
+	public int delStr(String ids);
 }

@@ -8,7 +8,7 @@ $(function(){
 			
 			var str = ""
 			for(var i = 0 ; i < res.length ;i++){
-				str += '<li> <a href="'+res[i].url+'"><i class="fa-desktop"></i> <span class="nav-label">'+res[i].menuName+' </span><span class="fa arrow"></span></a>';
+				str += '<li> <a href="'+res[i].url+'"><i class="'+ res[i].icon +'"></i> <span class="nav-label">'+res[i].menuName+' </span><span class="fa arrow"></span></a>';
 				if(res[i].children.length != 0){
 					str += '<ul class="nav nav-second-level">';
 					for(var j = 0 ; j< res[i].children.length ; j++ ){

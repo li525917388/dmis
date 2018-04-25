@@ -31,11 +31,6 @@
 		<button onclick="delDormitoryClick()">删除</button>
 		<button onclick="editDormitoryClick('view')">查看</button>
 		
-		楼宇：
-		<select id="dormitory_buildId">
-			<option value="">全部</option>
-		</select>
-		
 		<button onclick="dormitorySearchBtn()">搜索</button>
 	</div>
 	<table id="dormitory_table"></table>
@@ -162,7 +157,6 @@
 		var temp = {   //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的  
 			pageSize: params.pageSize,   //页面大小  
 			pageNumber: params.pageNumber,  //页码  
-			buildId: $("#dormitory_buildId").val(),
 			sort: params.sort,  //排序列名  
 			sortOrder: params.order//排位命令（desc，asc）  
 		};  
@@ -174,7 +168,7 @@
 		 
 	$("#dormitory_table").bootstrapTable({
 		//sidePagination:  "/cems/quality/getAllQuality.action", //服务端处理分页
-		url: '${contextPath}/dorm/dormitory/getDormitoryList',
+		url: '${contextPath}/dorm/bed/getBedList',
 		queryParamsType:'', //默认值为 'limit' ,在默认情况下 传给服务端的参数为：offset,limit,sort
                                    // 设置为 ''  在这种情况下传给服务器的参数为：pageSize,pageNumber
 		search: false,
@@ -193,14 +187,9 @@
 		columns: [
 			{checkbox: true}, 
 			{field: 'id', title: 'id'}, 
-			{field: 'buildName', title: '楼宇名称',searchable:true}, 
-			{field: 'maxNum', title: '最大床位' ,searchable:true},
-			{field: 'dormNo', title: '宿舍号'},
-			{field: 'dormSex', title: '性别',
-				formatter:function(value,row,index){
-					return value==1 ? '男' : '女';
-				},
-			},
+			{field: 'bedNo', title: '床位编号',searchable:true}, 
+			{field: 'bedType', title: '床位类型' ,searchable:true},
+			{field: 'dormType', title: '宿舍规格',searchable:true},
 			{title: '操作',field: 'id',align: 'center',
 				formatter:function(value,row,index){  
 					var e = '<a onclick="edit(\''+ row.id +'\')">编辑</a> ';  
@@ -211,9 +200,6 @@
 			}
 		]	
 	});
-			
-
-
-			
+	
 </script>
 </html>

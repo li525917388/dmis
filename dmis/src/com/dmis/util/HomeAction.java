@@ -96,4 +96,29 @@ public class HomeAction {
 		
 		return "dorm/dormitory";
 	}
+	
+	/**
+	 * 床位管理
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping("/bed")
+	public String bed(HttpServletRequest request, HttpServletResponse response){
+		
+		return "dorm/bed";
+	}
+	
+	
+	/**
+	 * 床位管理
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping("/dormAllot")
+	public String dormAllot(HttpServletRequest request, HttpServletResponse response){
+		
+		return "dorm/dormAllot";
+	}
 }

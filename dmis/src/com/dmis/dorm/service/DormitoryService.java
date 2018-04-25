@@ -19,9 +19,33 @@ public interface DormitoryService {
 	
 	
 	/**
-	 * 新增
+	 * 保存
 	 * @param dorm
 	 * @return
 	 */
-	public long add(Dormitory dorm);
+	public long save(Dormitory dorm);
+	
+	
+	/**
+	 * 获得实体
+	 * @param dorm
+	 * @return
+	 */
+	public Dormitory getEntity(long id);
+	
+	
+	/**
+	 * 获得实体
+	 * @param dorm
+	 * @return
+	 */
+	public int del(long id);
+	
+	
+	/**
+	 * 获得实体
+	 * @param dorm
+	 * @return
+	 */
+	public int dels(String ids);
 }
