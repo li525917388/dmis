@@ -1,9 +1,1 @@
-/SqlMapConfig.xml
 /com/
-/jdbc.properties
-/log4j.properties
-/mybatis-3-config.dtd
-/mybatis-3-mapper.dtd
-/springDao.xml
-/springService.xml
-/springmvc.xml

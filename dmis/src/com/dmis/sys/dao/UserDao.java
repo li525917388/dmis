@@ -9,8 +9,11 @@ import com.dmis.sys.entity.User;
  */
 public interface UserDao {
 
-	
-	public User login(User user);
+	/*
+	 * 登陆
+	 * 
+	 */
+	public User login(String username);
 	
 	/**
 	 * 根据用户名获得用户

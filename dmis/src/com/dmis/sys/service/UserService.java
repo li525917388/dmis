@@ -8,11 +8,14 @@ import com.dmis.sys.entity.User;
  *
  */
 public interface UserService {
+	
 
 	/**
-	 * 登录
+	 * 登陆
 	 * @param username
-	 * @param pwd
+	 * 
 	 */
-	public User login(String username, String pwd);
+	public User login(String username);
+
+	
 }

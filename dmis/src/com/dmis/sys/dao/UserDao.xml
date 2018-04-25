@@ -6,8 +6,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="com.dmis.sys.dao.UserDao">
 	
 	<!-- 账号登录 -->
-	<select id="login" parameterType="User" resultType="User">
-		select * from user where username=#{username} and pwd=#{pwd}
+	<select id="login" parameterType="java.lang.String" resultType="User">
+		select * from user where username=#{username}
 	</select>
 
 	<!-- 根据用户名获得用户 -->
