@@ -2,6 +2,7 @@ package com.dmis.dorm.dao;
 
 import java.util.List;
 
+import com.dmis.dorm.entity.DormPerson;
 import com.dmis.dorm.entity.Dormitory;
 import com.dmis.util.PageUtil;
 
@@ -60,4 +61,26 @@ public interface DormitoryDao {
 	 * @return
 	 */
 	public int delStr(String ids);
+	
+	
+	/**
+	 * 获得宿舍人员
+	 * @return
+	 */
+	public List<DormPerson> getDormPersons(long dormId);
+	
+	
+	/**
+	 * 宿舍添加人员
+	 * @return
+	 */
+	public int dormAddPerson(DormPerson dorm);
+	
+	
+	/**
+	 * 宿舍删除人员
+	 * @param stuId
+	 * @return
+	 */
+	public int dormRemovePerson(long stuId);
 }

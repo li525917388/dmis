@@ -57,18 +57,18 @@
 	});
 	
 	
-	//新增
-	function addDormitoryClick(){
+	//查看人
+	function lookPersons(id){
 		
-		layer.open({
+		parent.layer.open({
 			type: 2,
-			title: '新增',
+			title: '住宿情况',
 			shadeClose: true,
-			shade: false,
+			shade: 0.5,
 			closeBtn: 1,
 			maxmin: true, //开启最大化最小化按钮
-			area: ['800px', '400px'],
-			content: '${contextPath}/dorm/dormitory/toDormitoryForm'
+			area: ['900px', '600px'],
+			content: '${contextPath}/dorm/dormitory/toDormAllotPerson?id='+id
 		});
 	}
 	
@@ -95,7 +95,7 @@
 		};  
 		
 		return temp;  
-	}  
+	}
 	
 	
 		 
@@ -130,7 +130,7 @@
 			},
 			{title: '操作',field: 'id',align: 'center',
 				formatter:function(value,row,index){  
-					var e = '<i class="fa fa-home">1</i>';  
+					var e = '<a onclick="lookPersons(\''+ row.id +'\')">查看</a>';  
 					var d = '<a onclick="deletes(\''+ row.id +'\')">删除</a> ';  
 					var d = '<a onclick="addCourse(\''+ row.id +'\')">添加</a> ';  
 					return e+d;  

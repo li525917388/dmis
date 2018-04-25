@@ -8,6 +8,7 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import com.dmis.dorm.dao.DormitoryDao;
+import com.dmis.dorm.entity.DormPerson;
 import com.dmis.dorm.entity.Dormitory;
 import com.dmis.dorm.service.DormitoryService;
 import com.dmis.util.PageUtil;
@@ -90,6 +91,30 @@ public class DormitoryServiceImpl implements DormitoryService {
 		}
 		
 		return dormitoryDao.del(list);
+	}
+
+
+
+	@Override
+	public List<DormPerson> getDormPersons(long dormId) {
+		// TODO Auto-generated method stub
+		return dormitoryDao.getDormPersons(dormId);
+	}
+
+
+
+	@Override
+	public int dormAddPerson(DormPerson dorm) {
+		// TODO Auto-generated method stub
+		return dormitoryDao.dormAddPerson(dorm);
+	}
+
+
+
+	@Override
+	public int dormRemovePerson(long stuId) {
+		// TODO Auto-generated method stub
+		return dormitoryDao.dormRemovePerson(stuId);
 	}
 
 }

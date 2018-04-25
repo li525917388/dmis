@@ -15,6 +15,9 @@ public class Bed {
 	//宿舍规格
 	private Long dormType;
 	
+	//宿舍规格
+	private Long summary;
+	
 	//床位类型
 	private String bedType;
 	/**
@@ -79,6 +82,12 @@ public class Bed {
 	}
 	public void setDormType(Long dormType) {
 		this.dormType = dormType;
+	}
+	public Long getSummary() {
+		return summary;
+	}
+	public void setSummary(Long summary) {
+		this.summary = summary;
 	}
 	
 }

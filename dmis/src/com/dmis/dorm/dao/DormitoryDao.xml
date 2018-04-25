@@ -65,4 +65,26 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<delete id="delStr" parameterType="java.lang.String">
 		delete from dormitory where id in (${ids})
 	</delete>
+	
+	
+	<!-- 查看宿舍人员 -->
+	<select id="getDormPersons" parameterType="java.lang.Long" resultType="dormPerson">
+		select dp1.*,u.`name` as stuName,u.username as stuNo,bed.bedNo,bed.bedType from dormitory dorm
+		left join dorm_type dt on dt.id=dorm.dormType
+		left join bed on bed.dormType=dt.id
+		left join (select dp.* from dorm_person dp where dp.dormId=#{dormId})dp1 on dp1.bedId=bed.id
+		left join `user` u on u.id=dp1.stuId
+		where dorm.id=#{dormId}
+	</select>
+	
+	<!-- 宿舍添加学生 -->
+	<insert id="dormAddPerson" parameterType="dormPerson">
+		insert into dormPerson(stuId,dormId,bedId) 
+		values(#{stuId},#{dormId},#{bedId})
+	</insert>
+	
+	<!-- 宿舍删除学生 -->
+	<delete id="dormRemovePerson" parameterType="java.lang.Long">
+		delete from dormPerson where stuId=#{stuId}
+	</delete>
 </mapper>	

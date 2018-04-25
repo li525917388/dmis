@@ -1,6 +1,7 @@
 package com.dmis.dorm.action;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -9,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.dmis.dorm.entity.DormPerson;
 import com.dmis.dorm.entity.Dormitory;
 import com.dmis.dorm.service.DormitoryService;
 import com.dmis.util.GridView;
@@ -100,6 +102,13 @@ public class DormitoryAction {
 		response.getWriter().print(res);
 	}
 	
+	/**
+	 * 删除宿舍
+	 * @param request
+	 * @param response
+	 * @param ids
+	 * @throws IOException
+	 */
 	@RequestMapping("delDorm")
 	public void delDorm(HttpServletRequest request, HttpServletResponse response,String ids) throws IOException{
 		
@@ -111,5 +120,48 @@ public class DormitoryAction {
 		}
 		
 		response.getWriter().print(res);
+	}
+	
+	/**
+	 * 前往宿舍人员页面
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping("toDormAllotPerson")
+	public String toDormAllotPerson(HttpServletRequest request, HttpServletResponse response){
+		
+		String id = request.getParameter("id");
+		
+		request.setAttribute("dormId", id);
+		
+		return "dorm/form/dormAllotPerson";
+	}
+	
+	
+	/**
+	 * 查看宿舍人员
+	 * @param request
+	 * @param response
+	 * @param pageSize
+	 * @param pageNumber
+	 * @throws IOException
+	 */
+	@RequestMapping("getDormPersonList")
+	public void getDormPersonList(HttpServletRequest request, HttpServletResponse response,int pageSize , int pageNumber) throws IOException{
+		response.setContentType("text/html;charset=utf-8");
+
+		String dormId = request.getParameter("dormId");
+		
+		List<DormPerson> result = dormitoryService.getDormPersons(Long.valueOf(dormId));
+		
+		GridView grid = new GridView();
+		
+		grid.setRows(result);
+		grid.setTotal(result.size());
+		
+		String json = JSONObject.fromObject(grid).toString();
+		
+		response.getWriter().print(json);
 	}
 }
