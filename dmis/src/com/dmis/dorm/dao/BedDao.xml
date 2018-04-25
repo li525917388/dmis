@@ -25,43 +25,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		</foreach>
 	</select>
 
-	<!-- 新增 -->
-	<insert id="add"  parameterType="dormitory">
-		<selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
-          	SELECT LAST_INSERT_ID()
-      	</selectKey>
-		insert into dormitory(buildId,dormNo,maxNum,dormSex) 
-		values(#{buildId},#{dormNo},#{maxNum},#{dormSex})
-	</insert>
-	
-	
-	<!-- 修改 -->
-	<update id="update" parameterType="dormitory">
-		update dormitory 
-		set 
-			buildId=#{buildId},
-			dormNo=#{dormNo},
-			maxNum=#{maxNum},
-			dormSex=#{dormSex}
-		where id=#{id}
-	</update>
-	
-	<!-- 查看 -->
-	<select id="getEntity" parameterType="java.lang.Long" resultType="dormitory">
-		select * from dormitory where id=#{id}
+	<!-- 获得宿舍类型列表 -->
+	<select id="getDormTypeList" resultType="dormType">
+		select * from dorm_type
 	</select>
-	
-	<!-- 删除  -->
-	<delete id="del" parameterType="java.util.List">
-		delete from dormitory where id in 
-		<foreach collection="list" item="id" index="index" separator="," open="(" close=")">
-			#{id}
-		</foreach>
-	</delete>
-	
-	
-	<!-- 批量删除  -->
-	<delete id="delStr" parameterType="java.lang.String">
-		delete from dormitory where id in (${ids})
-	</delete>
 </mapper>	

@@ -38,9 +38,12 @@
 		</div>
 		
 		<div class="form-group">
-		    <label for="maxNum" class="col-sm-3 control-label">最大床位</label>
+		    <label for="maxNum" class="col-sm-3 control-label">宿舍类别</label>
 		    <div class="col-sm-8">
-		      	<input type="text" id="maxNum" class="form-control" value="${dormitory.maxNum }" placeholder="如：8">
+		      	<select id="dormType" class="form-control">
+	        		
+	      		</select>
+	      		<input type="hidden" id="dormTypeHid" value="${dormitory.dormType }">
 		    </div>
 		</div>
 		<div class="form-group">
@@ -89,6 +92,24 @@ $.ajax({
 	}
 });
 
+//加载宿舍类型
+$.ajax({
+	url: "${contextPath}/dorm/bed/getDormTypeList",
+	type: "get",
+	dataType: "json",
+	async: false,
+	success: function(res){
+		var html = "<option value=''>全部</option>";
+		
+		for(var i in res){
+			
+			html += "<option value='"+ res[i].id +"'>" + res[i].dormTypeName + "</option>";
+		}
+		
+		$("#dormType").html(html);
+	}
+});
+
 
 //初始化
 var oper = $("#oper").val();
@@ -96,6 +117,7 @@ if(oper == "view" || oper == "edit"){
 	
 	$("#buildId").val($("#buildIdHid").val());
 	$("#dormSex").val($("#dormSexHid").val());
+	$("#dormType").val($("#dormTypeHid").val());
 	
 	if(oper == "view"){
 		$("input").attr("disabled","disabled");
@@ -111,7 +133,7 @@ function submitClick(){
 		data: {
 			buildId: $("#buildId").val(),
 			dormNo: $("#dormNo").val(),
-			maxNum: $("#maxNum").val(),
+			dormType: $("#dormType").val(),
 			dormSex: $("#dormSex").val(),
 			id: $("#dormitoryId").val()
 		},

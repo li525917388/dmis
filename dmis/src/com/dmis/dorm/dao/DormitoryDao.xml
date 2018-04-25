@@ -6,8 +6,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="com.dmis.dorm.dao.DormitoryDao">
 	
 	<select id="getListQuery" parameterType="pageUtil" resultType="dormitory">
-		select d.*,b.name as buildName from dormitory d 
+		select d.*,b.name as buildName,dt.maxNum,dp1.alreadyNum from dormitory d 
 		left join building b on b.id=d.buildId 
+		left join dorm_type dt on dt.id=d.dormType
+		left join (select dp.dormId,count(dp.dormId)as alreadyNum from dorm_person dp GROUP BY dp.dormId)dp1
+			on dp1.dormId=d.id
 		where 1=1 
 		<foreach collection="where" item="wh">
 			and ${wh.parm} ${wh.op} #{wh.value} 
@@ -31,8 +34,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
           	SELECT LAST_INSERT_ID()
       	</selectKey>
-		insert into dormitory(buildId,dormNo,maxNum,dormSex) 
-		values(#{buildId},#{dormNo},#{maxNum},#{dormSex})
+		insert into dormitory(buildId,dormNo,dormType,dormSex) 
+		values(#{buildId},#{dormNo},#{dormType},#{dormSex})
 	</insert>
 	
 	
@@ -42,7 +45,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		set 
 			buildId=#{buildId},
 			dormNo=#{dormNo},
-			maxNum=#{maxNum},
+			dormType=#{dormType},
 			dormSex=#{dormSex}
 		where id=#{id}
 	</update>
@@ -69,7 +72,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 查看宿舍人员 -->
 	<select id="getDormPersons" parameterType="java.lang.Long" resultType="dormPerson">
-		select dp1.*,u.`name` as stuName,u.username as stuNo,bed.bedNo,bed.bedType from dormitory dorm
+		select bed.id as bedId,dp1.*,u.`name` as stuName,u.username as stuNo,bed.bedNo,bed.bedType from dormitory dorm
 		left join dorm_type dt on dt.id=dorm.dormType
 		left join bed on bed.dormType=dt.id
 		left join (select dp.* from dorm_person dp where dp.dormId=#{dormId})dp1 on dp1.bedId=bed.id
@@ -79,12 +82,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 宿舍添加学生 -->
 	<insert id="dormAddPerson" parameterType="dormPerson">
-		insert into dormPerson(stuId,dormId,bedId) 
+		insert into dorm_person(stuId,dormId,bedId) 
 		values(#{stuId},#{dormId},#{bedId})
 	</insert>
 	
 	<!-- 宿舍删除学生 -->
 	<delete id="dormRemovePerson" parameterType="java.lang.Long">
-		delete from dormPerson where stuId=#{stuId}
+		delete from dorm_person where id=#{id}
 	</delete>
 </mapper>	

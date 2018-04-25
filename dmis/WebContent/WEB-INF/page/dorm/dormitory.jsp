@@ -62,6 +62,8 @@
 	});
 	
 	
+	
+	
 	//新增
 	function addDormitoryClick(){
 		

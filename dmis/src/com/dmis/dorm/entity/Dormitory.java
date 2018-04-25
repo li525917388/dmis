@@ -15,8 +15,14 @@ public class Dormitory {
 	//楼宇name（非字段）
 	private String buildName;
 	
-	//床位数
+	//宿舍类型
+	private Long dormType;
+	
+	//最大床位数
 	private Integer maxNum;
+	
+	//已住人数
+	private Integer alreadyNum;
 	
 	//宿舍编号
 	private Integer dormNo;
@@ -70,6 +76,22 @@ public class Dormitory {
 
 	public void setBuildName(String buildName) {
 		this.buildName = buildName;
+	}
+
+	public Integer getAlreadyNum() {
+		return alreadyNum;
+	}
+
+	public void setAlreadyNum(Integer alreadyNum) {
+		this.alreadyNum = alreadyNum;
+	}
+
+	public Long getDormType() {
+		return dormType;
+	}
+
+	public void setDormType(Long dormType) {
+		this.dormType = dormType;
 	}
 	
 	

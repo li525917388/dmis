@@ -3,6 +3,7 @@ package com.dmis.dorm.dao;
 import java.util.List;
 
 import com.dmis.dorm.entity.Bed;
+import com.dmis.dorm.entity.DormType;
 import com.dmis.util.PageUtil;
 
 /**
@@ -26,4 +27,11 @@ public interface BedDao {
 	 * @return
 	 */
 	public int getBedTotalQuery(PageUtil pu);
+	
+	
+	/**
+	 * 获得宿舍类型列表
+	 * @return
+	 */
+	public List<DormType> getDormTypeList();
 }

@@ -122,6 +122,7 @@
 			{field: 'id', title: 'id'}, 
 			{field: 'buildName', title: '楼宇名称',searchable:true}, 
 			{field: 'maxNum', title: '最大床位' ,searchable:true},
+			{field: 'alreadyNum', title: '已住人数' ,searchable:true},
 			{field: 'dormNo', title: '宿舍号'},
 			{field: 'dormSex', title: '性别',
 				formatter:function(value,row,index){
@@ -133,7 +134,7 @@
 					var e = '<a onclick="lookPersons(\''+ row.id +'\')">查看</a>';  
 					var d = '<a onclick="deletes(\''+ row.id +'\')">删除</a> ';  
 					var d = '<a onclick="addCourse(\''+ row.id +'\')">添加</a> ';  
-					return e+d;  
+					return e;  
 				} 
 			}
 		]	

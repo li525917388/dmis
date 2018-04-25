@@ -22,6 +22,11 @@
 <body>
 	<input id="dormId" value="${dormId }">
 	<table id="dormPerson_table"></table>
+	
+	<!-- 加人弹出框 -->
+	<div id="addPersonDiv" style="display: none;">
+		<input id="person_id" type="text">
+	</div>
 </body>
 
 <script type="text/javascript">
@@ -38,6 +43,65 @@ function queryParams(params) {  //bootstrapTable自带参数
 	};  
 	
 	return temp;  
+}
+
+//加人
+function addPerson(bedId){
+	$("#person_id").val("");
+	
+	layer.open({
+		type: 1,
+		title: "添加学生",
+		btn: ["添加","取消"],
+		closeBtn: 1,
+		area: ['400px', '300px'],
+		content: $("#addPersonDiv"),
+		yes: function(ind){
+			var uid = $("#person_id").val();
+			var dormId = $("#dormId").val();
+			
+			$.ajax({
+				url: "${contextPath}/dorm/dormitory/dormAddPerson",
+				type: "post",
+				data: {stuId:uid, bedId:bedId, dormId:dormId},
+				success: function(res){
+					
+					if(res == 1){
+						layer.msg("添加成功");
+						dormPersonRefresh();
+						layer.close(ind);
+					}else{
+						layer.msg("添加失败");
+					}
+				}
+			});
+		}
+	});
+}
+
+//删人
+function removePerson(id){
+	$.ajax({
+		url: "${contextPath}/dorm/dormitory/dormRemovePerson",
+		type: "post",
+		data: {id:id},
+		success: function(res){
+			
+			if(res == 1){
+				layer.msg("成功移除");
+				dormPersonRefresh();
+				layer.close(ind);
+			}else{
+				layer.msg("操作失败");
+			}
+		}
+	});
+}
+
+//刷新
+function dormPersonRefresh(){
+	
+	$("#dormPerson_table").bootstrapTable("refresh","${contextPath}/dorm/dormitory/getDormPersonList");
 }
 
 //加载表格
@@ -61,7 +125,9 @@ $("#dormPerson_table").bootstrapTable({
 	columns: [
 		{checkbox: true}, 
 		{field: 'id', title: 'id'}, 
-		{field: 'stuId', title: '学生id',searchable:true}, 
+		{field: 'stuId', title: '状态',searchable:true,formatter:function(value,row,index){
+			return value == 0 ? "<span class='label label-error'>空床位</span>" : "<span class='label label-success'>已入住</span>";
+		}}, 
 		{field: 'stuName', title: '学生姓名'},
 		{field: 'stuNo', title: '学号'},
 		{field: 'bedId', title: '床位' ,searchable:true},
@@ -69,10 +135,15 @@ $("#dormPerson_table").bootstrapTable({
 		{field: 'bedType', title: '床位类型'},
 		{title: '操作',field: 'id',align: 'center',
 			formatter:function(value,row,index){  
-				var e = '<a onclick="lookPersons(\''+ row.id +'\')">查看</a>';  
-				var d = '<a onclick="deletes(\''+ row.id +'\')">删除</a> ';  
-				var d = '<a onclick="addCourse(\''+ row.id +'\')">添加</a> ';  
-				return e+d;  
+				
+				var e = '';  
+				
+				if(row.stuId == 0){
+					e += '<a onclick="addPerson(\''+ row.bedId +'\')">加人</a>';
+				}else{
+					e += '<a onclick="removePerson(\''+ row.id +'\')">移除</a>';
+				}
+				return e;  
 			} 
 		}
 	]	

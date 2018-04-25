@@ -1,11 +1,14 @@
 package com.dmis.dorm.service.impl;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
 import com.dmis.dorm.dao.BedDao;
 import com.dmis.dorm.entity.Bed;
+import com.dmis.dorm.entity.DormType;
 import com.dmis.dorm.service.BedService;
 import com.dmis.util.PageUtil;
 import com.dmis.util.ResultAndTotal;
@@ -35,6 +38,13 @@ public class BedServiceImpl implements BedService{
 		res.setTotal(bedDao.getBedTotalQuery(pageUtil));
 		
 		return res;
+	}
+
+
+	@Override
+	public List<DormType> getDormTypeList() {
+		// TODO Auto-generated method stub
+		return bedDao.getDormTypeList();
 	}
 
 }

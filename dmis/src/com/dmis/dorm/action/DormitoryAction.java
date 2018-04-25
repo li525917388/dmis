@@ -10,9 +10,13 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.dmis.dorm.entity.Building;
 import com.dmis.dorm.entity.DormPerson;
+import com.dmis.dorm.entity.DormType;
 import com.dmis.dorm.entity.Dormitory;
+import com.dmis.dorm.service.BedService;
 import com.dmis.dorm.service.DormitoryService;
+import com.dmis.sys.service.BuildingService;
 import com.dmis.util.GridView;
 import com.dmis.util.PageUtil;
 import com.dmis.util.ResultAndTotal;
@@ -30,6 +34,10 @@ public class DormitoryAction {
 
 	@Resource
 	DormitoryService dormitoryService;
+	@Resource
+	BuildingService buildingService;
+	@Resource
+	BedService bedService;
 	
 	@RequestMapping("getDormitoryList")
 	public void getDormitoryingList(HttpServletRequest request, HttpServletResponse response,int pageSize , int pageNumber) throws IOException{
@@ -163,5 +171,37 @@ public class DormitoryAction {
 		String json = JSONObject.fromObject(grid).toString();
 		
 		response.getWriter().print(json);
+	}
+	
+	
+	/**
+	 * 宿舍加人
+	 * @param request
+	 * @param response
+	 * @param dp
+	 * @throws IOException
+	 */
+	@RequestMapping("dormAddPerson")
+	public void dormAddPerson(HttpServletRequest request, HttpServletResponse response,DormPerson dp) throws IOException{
+		
+		long res = dormitoryService.dormAddPerson(dp);
+		
+		response.getWriter().print(res);
+	}
+	
+	
+	/**
+	 * 宿舍移除学生
+	 * @param request
+	 * @param response
+	 * @param dp
+	 * @throws IOException
+	 */
+	@RequestMapping("dormRemovePerson")
+	public void dormRemovePerson(HttpServletRequest request, HttpServletResponse response,long id) throws IOException{
+		
+		long res = dormitoryService.dormRemovePerson(id);
+		
+		response.getWriter().print(res);
 	}
 }

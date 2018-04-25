@@ -72,5 +72,5 @@ public interface DormitoryService {
 	 * @param stuId
 	 * @return
 	 */
-	public int dormRemovePerson(long stuId);
+	public int dormRemovePerson(long id);
 }

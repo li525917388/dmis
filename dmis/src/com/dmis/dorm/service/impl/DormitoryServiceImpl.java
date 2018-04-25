@@ -8,6 +8,7 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import com.dmis.dorm.dao.DormitoryDao;
+import com.dmis.dorm.entity.Bed.BedTypeEnum;
 import com.dmis.dorm.entity.DormPerson;
 import com.dmis.dorm.entity.Dormitory;
 import com.dmis.dorm.service.DormitoryService;
@@ -97,8 +98,22 @@ public class DormitoryServiceImpl implements DormitoryService {
 
 	@Override
 	public List<DormPerson> getDormPersons(long dormId) {
-		// TODO Auto-generated method stub
-		return dormitoryDao.getDormPersons(dormId);
+		
+		List<DormPerson> list = dormitoryDao.getDormPersons(dormId);
+		
+		for(DormPerson dp : list){
+			
+			String typeName = "未知";
+			try{
+				typeName = BedTypeEnum.valueOf(dp.getBedType()).getName();
+			}catch (Exception e) {
+				
+			}
+			
+			dp.setBedType(typeName);
+		}
+		
+		return list;
 	}
 
 
