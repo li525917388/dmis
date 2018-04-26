@@ -1,10 +1,17 @@
 package com.dmis.util;
 
+import java.util.List;
+
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.dmis.sys.entity.Menu;
+import com.dmis.sys.entity.User;
+import com.dmis.sys.service.MenuService;
 
 /**
  * 跳转controller
@@ -15,6 +22,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("home")
 public class HomeAction {
 
+	@Resource
+	MenuService menuService;
+	
 	/**
 	 * 主页
 	 * @param request
@@ -33,9 +43,29 @@ public class HomeAction {
 	@RequestMapping("/main")
 	public String main(HttpServletRequest request, HttpServletResponse response){
 		
-		System.out.println("主页");
+		User user = (User) request.getSession().getAttribute("sessionUser");
+		
+		if(user == null) return "index";
+		
+		List<Menu> menus = menuService.getMenuByUid(user.getId());
+		
+		request.setAttribute("roleMenus", menus);
 		
 		return "main";
+	}
+	
+	/**
+	 * 主页
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping("/home")
+	public String home(HttpServletRequest request, HttpServletResponse response){
+		
+		System.out.println("主页");
+		
+		return "sys/home";
 	}
 	
 	
@@ -133,5 +163,18 @@ public class HomeAction {
 	public String accessPerson(HttpServletRequest request, HttpServletResponse response){
 		
 		return "other/accessPerson";
+	}
+	
+	
+	/**
+	 * 物品出入记录
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping("/accessMaterial")
+	public String accessMaterial(HttpServletRequest request, HttpServletResponse response){
+		
+		return "other/accessMaterial";
 	}
 }

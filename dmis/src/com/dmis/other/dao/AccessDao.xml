@@ -42,4 +42,46 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="getAccessPersonEntity" parameterType="java.lang.Long" resultType="accessPerson">
 		select * from access_person where id=#{id}
 	</select>
+	
+	
+	
+	<!-- ******************************************* -->
+	
+	<select id="getAccessMaterials" parameterType="pageUtil" resultType="accessMaterial">
+		select *  from access_material 
+		where 1=1 
+		<foreach collection="where" item="wh">
+			and ${wh.parm} ${wh.op} #{wh.value} 
+		</foreach>
+		
+		limit #{start},#{pageSize}
+	</select>
+	
+	<!-- 获得最大数 -->
+	<select id="getAccessMaterialTotal" parameterType="pageUtil"  resultType="Integer">
+		select count(*) from access_material
+		
+		where 1=1 
+		<foreach collection="where" item="wh">
+			and ${wh.parm} ${wh.op} #{wh.value} 
+		</foreach>
+	</select>
+
+	<!-- 添加物资出入 -->
+	<insert id="addAccessMaterial" parameterType="accessMaterial">
+		insert into access_material(matName,matType,matNum,unit,nowTime,accessType) 
+		values(#{matName},#{matType},#{matNum},#{unit},#{nowTime},#{accessType})
+	</insert>
+	
+	<!-- 更新物资出入 -->
+	<update id="updateAccessMaterial" parameterType="accessMaterial">
+		update access_material 
+		set matName=#{matName},matType=#{matType},matNum=#{matNum},unit=#{unit},nowTime=#{nowTime},accessType=#{accessType}
+		where id=#{id}
+	</update>
+	
+	<!-- 获得物资出入实体 -->
+	<select id="getAccessMaterialEntity" parameterType="java.lang.Long" resultType="accessMaterial">
+		select * from access_material where id=#{id}
+	</select>
 </mapper>	

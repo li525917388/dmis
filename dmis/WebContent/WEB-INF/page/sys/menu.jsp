@@ -6,195 +6,81 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>菜单管理</title>
+<title>Insert title here</title>
+	<link rel="stylesheet" href="${contextPath}/static/layer/mobile/need/layer.css">
+	<link rel="stylesheet" href="${contextPath}/static/hplus/js/table/bootstrap.min.css">
+	<link rel="stylesheet" href="${contextPath}/static/hplus/js/table/bootstrap-table.css">
 	
-	<link rel="stylesheet" href="${contextPath}/static/css/bootstrap.min.css" />
-	<link rel="stylesheet" href="${contextPath}/static/css/font-awesome.min.css" />
-	<link rel="stylesheet" href="${contextPath}/static/css/ace.min.css" />
-	<link rel="stylesheet" href="${contextPath}/static/jqgrid/ui.jqgrid.css" />
 	
-	<script src='${contextPath}/static/js/jquery.min.js'></script>
-	<script src='${contextPath}/static/js/bootstrap.min.js'></script>
-	<script src="${contextPath}/static/jqgrid/grid.locale-cn.js"></script>
-	<script src='${contextPath}/static/jqgrid/jquery.jqGrid.min.js'></script>
-	
+	<script src="${contextPath}/static/hplus/js/table/jquery-3.1.1.min.js"></script>
+	<script src="${contextPath}/static/layer/layer.js"></script>
+	<script src="${contextPath}/static/hplus/js/table/bootstrap.min.js"></script>
+	<script src="${contextPath}/static/hplus/js/table/bootstrap-table.js"></script>
+	<script src="${contextPath}/static/hplus/js/table/bootstrap-table-zh-CN.js"></script>
+
 </head>
 <body>
-	<div class="page-content">
-						<div class="row">
-							<div class="col-xs-12">
-		<table id="user_grid"></table>
-		<div id="user_pager"></div>
-	</div>
-	</div></div>
-	
-	
-	<script type="text/javascript">
+	<div id="dormitory_search" style="margin: 5px 0px">
 		
-		$("#user_grid").jqGrid({
-	        url: '${contextPath}/sys/menu/getMenuList',
-	        datatype: "json",
-	        colModel: [			
-				{ label: 'id', name: 'id', index: 'id', width: 50, key: true },
-				{ label: '菜单名称', name: 'menuName', index: 'menuName', width: 80 }, 			
-				{ label: '菜单编号', name: 'menuNo', index: 'menuNo', width: 80 }, 			
-				{ label: 'url', name: 'url', index: 'url', width: 80 },			
-				{ label: '菜单类型', name: 'type', index: 'type', width: 80 }, 			
-				{ label: '上级菜单编号', name: 'fno', index: 'fno', width: 80 }, 			
-				{ label: '排序', name: 'menuOrder', index: 'menuOrder', width: 80 }			
-	        ],
-			viewrecords: true,
-	        height: "100%",
-	        rowNum: 10,
-			rowList : [10,30,50],
-	        rownumbers: false, 
-	        rownumWidth: 25, 
-	        autowidth:true,
-	        multiselect: true,
-	        pager: "#user_pager",
+		<button onclick="addClick()">新增</button>
+		<button onclick="editClick('edit')">修改</button>
+		<button onclick="delClick()">删除</button>
+		<button onclick="editClick('view')">查看</button>
 
-	        gridComplete:function(){
-	        	//隐藏grid底部滚动条
-	        	$("#jqGrid").closest(".ui-jqgrid-bdiv").css({ "overflow-x" : "hidden" }); 
-	        }
-	    });
-	
-	/* 	jQuery("#user_grid")
-		.jqGrid(
-				'navGrid',
-				"#user_pager",
-				{ // navbar options
-					edit : true,
-					editicon : 'ace-icon fa fa-pencil blue',
-					add : true,
-					addicon : '.glyphicon .glyphicon-plus-sign',
-					del : true,
-					delicon : 'ace-icon fa fa-trash-o red',
-					search : true,
-					searchicon : 'ace-icon fa fa-search orange',
-					refresh : true,
-					refreshicon : 'ace-icon fa fa-refresh blue',
-					view : true,
-					viewicon : 'ace-icon fa fa-search-plus grey'
-				},
-				{
-					// edit record form
-					// closeAfterEdit: true,
-					// width: 700,
-					recreateForm : true,
-					beforeShowForm : function(e) {
-						var form = $(e[0]);
-						form
-								.closest(
-										'.ui-jqdialog')
-								.find(
-										'.ui-jqdialog-titlebar')
-								.wrapInner(
-										'<div class="widget-header" />')
-						style_edit_form(form);
-					},
-					errorTextFormat : function(
-							response) {
-						var result = eval('('
-								+ response.responseText
-								+ ')');
-						return result.message;
-					}
-				},
-				{
-					// new record form
-					// width: 700,
-					closeAfterAdd : true,
-					recreateForm : true,
-					viewPagerButtons : false,
-					beforeShowForm : function(e) {
-						var form = $(e[0]);
-						form
-								.closest(
-										'.ui-jqdialog')
-								.find(
-										'.ui-jqdialog-titlebar')
-								.wrapInner(
-										'<div class="widget-header" />')
-						style_edit_form(form);
-					},
-					errorTextFormat : function(
-							response) {
-						var result = eval('('
-								+ response.responseText
-								+ ')');
-						return result.message;
-					}
-				},
-				{
-					// delete record form
-					recreateForm : true,
-					beforeShowForm : function(e) {
-						var form = $(e[0]);
-						if (form.data('styled'))
-							return false;
-						form
-								.closest(
-										'.ui-jqdialog')
-								.find(
-										'.ui-jqdialog-titlebar')
-								.wrapInner(
-										'<div class="widget-header" />')
-						style_delete_form(form);
-						form.data('styled',
-								true);
-					},
-					onClick : function(e) {
-						// alert(1);
-					}
-				},
-				{
-					// search form
-					recreateForm : true,
-					afterShowSearch : function(
-							e) {
-						var form = $(e[0]);
-						form
-								.closest(
-										'.ui-jqdialog')
-								.find(
-										'.ui-jqdialog-title')
-								.wrap(
-										'<div class="widget-header" />')
-						style_search_form(form);
-					},
-					afterRedraw : function() {
-						style_search_filters($(this));
-					},
-					multipleSearch : true
-				},
-				{
-					// view record form
-					recreateForm : true,
-					beforeShowForm : function(e) {
-						var form = $(e[0]);
-						form
-								.closest(
-										'.ui-jqdialog')
-								.find(
-										'.ui-jqdialog-title')
-								.wrap(
-										'<div class="widget-header" />')
-					}
-				})
-		
-		jQuery("#user_grid")
-		.jqGrid(
-				'navButtonAdd',
-				"#user_pager",
-				{
-					caption : "",
-					title : "导出Excel",
-					buttonicon : "ace-icon fa fa-file-excel-o green",
-					onClickButton : function() {
-						
-					}
-				}); */
-	</script>
+		<button onclick="searchBtn()">搜索</button>
+	</div>
+
+	<table id="role_table"></table>
+
 </body>
+<script type="text/javascript">
+	//新增
+	function addClick(){
+		
+		layer.open({
+			type: 2,
+			title: '新增',
+			shadeClose: true,
+			shade: 0.5,
+			closeBtn: 1,
+			//maxmin: true, //开启最大化最小化按钮
+			area: ['600px', '400px'],
+			content: '${contextPath}/other/access/toAccessMaterialForm'
+		});
+	}		
+		
+	$(function(){
+			 
+		$("#role_table").bootstrapTable({
+				//sidePagination:  "/cems/quality/getAllQuality.action", //服务端处理分页
+   			url: '${contextPath}/sys/menu/getMenuList',
+   			queryParamsType:'', //默认值为 'limit' ,在默认情况下 传给服务端的参数为：offset,limit,sort
+                                    // 设置为 ''  在这种情况下传给服务器的参数为：pageSize,pageNumber
+
+   			striped: true,
+            pagination: true,
+            pageList: [2,20,50,100],
+            pageSize:2,
+            pageNumber:1,
+            sidePagination:'server',//设置为服务器端分页
+   			columns: [
+   				{checkbox: true}, 
+   				{field: 'id', title: '编号'}, 
+       			{field: 'menuName', title: '菜单名称名称'}, 
+    			{field: 'menuNo', title: '菜单编码' },
+    			{field: 'type', title: '菜单类型' ,formatter: function(val,row,index){
+    				return val == "1" ? '<span class="label label-success">目录</span>' : '<span class="label label-warning">菜单</span>';
+    			}},
+    			{field: 'url', title: 'url' },
+    			{field: 'icon', title: '图标'},
+    			{field: 'fno', title: '上级菜单编码' },
+    			{field: 'menuOrder', title: '排序'},
+    			
+    		]	
+		});
+			
+	});
+
+			
+</script>
 </html>

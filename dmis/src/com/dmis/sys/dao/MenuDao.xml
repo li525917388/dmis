@@ -5,7 +5,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="com.dmis.sys.dao.MenuDao">
 	
-	<!-- 账号登录 -->
+	<!--  -->
 	<select id="getMenuByUid" parameterType="java.lang.Long" resultType="menu">
 		select m.* from user_role ur
 		left join role_menu rm on rm.rid=ur.rid 

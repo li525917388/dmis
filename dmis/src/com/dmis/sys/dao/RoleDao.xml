@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"../../../../mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dmis.sys.dao.RoleDao">
+	
+	<!-- 获得角色列表 -->
+	<select id="getRoles" parameterType="pageUtil" resultType="role">
+		select * from role
+		where 1=1 
+		<foreach collection="where" item="wh">
+			and ${wh.parm} ${wh.op} #{wh.value} 
+		</foreach>
+		limit #{start},#{pageSize}
+	</select>
+	
+	
+	<select id="getRoleTotal" parameterType="pageUtil"  resultType="Integer">
+		select count(*) from role
+		where 1=1 
+		<foreach collection="where" item="wh">
+			and ${wh.parm} ${wh.op} #{wh.value} 
+		</foreach>
+	</select>
+	
+	<!-- 获得角色下树菜单 -->
+	<select id="getMenuByRole" parameterType="java.lang.Long" resultType="menu">
+		select m.*,case when rm1.mid is null then 'false' else 'true' end as checked from menu m 
+		left join (select * from role_menu rm where rm.rid=#{rid})rm1 on rm1.mid=m.id
+	</select>
+
+	<insert id="addRoleMenu" parameterType="java.util.Map">
+		insert into role_menu(rid,mid) 
+		values(#{rid},#{mid})
+	</insert>
+	
+	
+	<delete id="delRoleMenu" parameterType="java.lang.Long">
+		delete from role_menu where rid=#{rid}
+	</delete>
+</mapper>	

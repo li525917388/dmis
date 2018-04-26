@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.dmis.other.entity.AccessMaterial;
 import com.dmis.other.entity.AccessPerson;
 import com.dmis.other.service.AccessService;
 import com.dmis.util.GridView;
@@ -118,6 +119,81 @@ public class AccessAction {
 		}
 		
 		int res = accessService.saveAccessPerson(accessPerson);
+		
+		response.getWriter().print(res);
+	}
+	
+	
+	
+	
+	
+	
+	@RequestMapping("/getAccessMaterials")
+	public void getAccessMaterials(HttpServletRequest request, HttpServletResponse response,int pageSize, int pageNumber) throws IOException{
+		response.setContentType("text/html;charset=utf-8");
+		
+		PageUtil pageUtil = new PageUtil();
+		pageUtil.setPageSize(pageSize);
+		pageUtil.setPage(pageNumber);
+		
+		ResultAndTotal<AccessMaterial> result = accessService.searchAccessMaterial(pageUtil);
+		
+		GridView grid = new GridView();
+		
+		grid.setRows(result.getRows());
+		grid.setTotal(result.getTotal());
+		
+		String json = JSONObject.fromObject(grid).toString();
+		
+		response.getWriter().print(json);
+	}
+	
+	
+	@RequestMapping("toAccessMaterialForm")
+	public String toAccessMaterialForm(HttpServletRequest request, HttpServletResponse response){
+		String id = request.getParameter("id");
+		String oper = request.getParameter("oper");
+		
+		request.setAttribute("oper", oper);
+		
+		if("edit".equals(oper) || "view".equals(oper)){
+			
+			AccessMaterial entity = accessService.getAccessMaterialEntity(Long.valueOf(id));
+			
+			//设置时间转换
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+			
+			Date nt = entity.getNowTime();
+			if(nt != null)entity.setNowTimeCn(sdf.format(nt));
+
+			request.setAttribute("accessMaterial", entity);
+		}
+		
+		return "other/form/accessMaterialForm";
+	}
+	
+	
+	@RequestMapping("saveAccessMaterial")
+	public void saveAccessMaterial(HttpServletRequest request, HttpServletResponse response,AccessMaterial entity) throws IOException{
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+		
+		try {
+			Date nt = sdf.parse(entity.getNowTimeCn());
+			
+			entity.setNowTime(nt);
+			
+		} catch (ParseException e) {
+			
+			System.out.println("时间格式错误");
+			e.printStackTrace();
+			
+			response.getWriter().print("时间格式错误");
+			
+			return ;
+		}
+		
+		int res = accessService.saveAccessMaterial(entity);
 		
 		response.getWriter().print(res);
 	}

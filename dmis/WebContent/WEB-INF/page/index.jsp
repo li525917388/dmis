@@ -81,10 +81,10 @@
            			dataType: 'json',
            			success : function(res){
            				var dataObj = eval(res)
-           				alert(dataObj)
+           				
            				if(res.flag == 'success'){
-           					alert("请输入您要跳转的地址")
-           					/* top.location= '${contextPath}/home/main'; */ 
+           					
+           					top.location= '${contextPath}/home/main';
            				}else if (res.flag == 'failure'){
            					confirm("用户名或密码有误!！请重新输入！！！");  
 							

@@ -5,6 +5,7 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import com.dmis.other.dao.AccessDao;
+import com.dmis.other.entity.AccessMaterial;
 import com.dmis.other.entity.AccessPerson;
 import com.dmis.other.service.AccessService;
 import com.dmis.util.PageUtil;
@@ -48,6 +49,29 @@ public class AccessServiceImpl implements AccessService {
 	public AccessPerson getAccessPersonEntity(long id) {
 		
 		return accessDao.getAccessPersonEntity(id);
+	}
+
+	@Override
+	public ResultAndTotal<AccessMaterial> searchAccessMaterial(PageUtil pageUtil) {
+		ResultAndTotal<AccessMaterial> res = new ResultAndTotal<AccessMaterial>();
+		
+		res.setRows(accessDao.getAccessMaterials(pageUtil));
+		res.setTotal(accessDao.getAccessMaterialTotal(pageUtil));
+		
+		return res;
+	}
+
+	@Override
+	public int saveAccessMaterial(AccessMaterial accessMaterial) {
+		if(accessMaterial.getId() == null) return accessDao.addAccessMaterial(accessMaterial);
+		
+		else return accessDao.updateAccessMaterial(accessMaterial);
+	}
+
+	@Override
+	public AccessMaterial getAccessMaterialEntity(long id) {
+		// TODO Auto-generated method stub
+		return accessDao.getAccessMaterialEntity(id);
 	}
 
 }

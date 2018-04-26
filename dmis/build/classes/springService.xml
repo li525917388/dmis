@@ -19,6 +19,13 @@
 		<property name="dataSource" ref="dataSource"/>
 	</bean> -->
 
+	<!-- transaction support-->
+	<!-- PlatformTransactionMnager -->
+	<bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+    	<property name="dataSource" ref="dataSource" />
+	</bean>
+	<!-- enable transaction annotation support -->
+	<tx:annotation-driven transaction-manager="txManager" />
 
 	<!-- 通知 -->
 	<!-- <tx:advice id="txAdvice" transaction-manager="transactionManager">

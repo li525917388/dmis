@@ -26,16 +26,16 @@
 <body>
 	<div id="dormitory_search" style="margin: 5px 0px">
 		
-		<button onclick="addDormitoryClick()">新增</button>
-		<button onclick="editDormitoryClick('edit')">修改</button>
-		<button onclick="delDormitoryClick()">删除</button>
-		<button onclick="editDormitoryClick('view')">查看</button>
+		<button onclick="addClick()">新增</button>
+		<button onclick="editClick('edit')">修改</button>
+		<button onclick="delClick()">删除</button>
+		<button onclick="editClick('view')">查看</button>
 		
 		
 		
-		<button onclick="dormitorySearchBtn()">搜索</button>
+		<button onclick="searchBtn()">搜索</button>
 	</div>
-	<table id="accessPerson_table"></table>
+	<table id="accessMaterial_table"></table>
 
 </body>
 <script type="text/javascript">
@@ -43,7 +43,7 @@
 	
 	
 	//新增
-	function addDormitoryClick(){
+	function addClick(){
 		
 		layer.open({
 			type: 2,
@@ -53,15 +53,15 @@
 			closeBtn: 1,
 			//maxmin: true, //开启最大化最小化按钮
 			area: ['600px', '400px'],
-			content: '${contextPath}/other/access/toAccessPersonForm'
+			content: '${contextPath}/other/access/toAccessMaterialForm'
 		});
 	}
 	
 	
 	//编辑
-	function editDormitoryClick(oper){
+	function editClick(oper){
 		
-		var ids = $("#accessPerson_table").bootstrapTable("getSelections");
+		var ids = $("#accessMaterial_table").bootstrapTable("getSelections");
 		
 		var titleName = oper == "edit" ? "编辑" : "查看";
 		
@@ -75,7 +75,7 @@
 				closeBtn: 1,
 				//maxmin: true, //开启最大化最小化按钮
 				area: ['600px', '400px'],
-				content: '${contextPath}/other/access/toAccessPersonForm?oper='+ oper +'&id='+ ids[0].id
+				content: '${contextPath}/other/access/toAccessMaterialForm?oper='+ oper +'&id='+ ids[0].id
 			});
 		}else{
 			
@@ -85,8 +85,8 @@
 	
 	
 	//删除
-	function delDormitoryClick(){
-		var selects = $("#accessPerson_table").bootstrapTable("getSelections");
+	function delClick(){
+		var selects = $("#accessMaterial_table").bootstrapTable("getSelections");
 		
 		if(selects.length > 0){
 			
@@ -132,9 +132,9 @@
 	
 	
 	//刷新
-	function dormitorySearchBtn(){
+	function searchBtn(){
 		
-		$("#accessPerson_table").bootstrapTable("refresh","${contextPath}/other/access/getAccessPersons");
+		$("#accessMaterial_table").bootstrapTable("refresh","${contextPath}/other/access/getAccessMaterials");
 	}
 	
 	
@@ -191,9 +191,9 @@
 	}
 	
 		 
-	$("#accessPerson_table").bootstrapTable({
+	$("#accessMaterial_table").bootstrapTable({
 		//sidePagination:  "/cems/quality/getAllQuality.action", //服务端处理分页
-		url: '${contextPath}/other/access/getAccessPersons',
+		url: '${contextPath}/other/access/getAccessMaterials',
 		queryParamsType:'', //默认值为 'limit' ,在默认情况下 传给服务端的参数为：offset,limit,sort
                                    // 设置为 ''  在这种情况下传给服务器的参数为：pageSize,pageNumber
 		search: false,
@@ -212,13 +212,15 @@
 		columns: [
 			{checkbox: true}, 
 			{field: 'id', title: 'id'}, 
-			{field: 'personName', title: '来访人姓名',searchable:true}, 
-			{field: 'phone', title: '电话' ,searchable:true},
-			{field: 'objective', title: '目的'},
-			{field: 'personSum', title: '人数'},
-			{field: 'accessTime', title: '访问时间',formatter: dateFormat},
-			{field: 'leaveTime', title: '离开时间',formatter: dateFormat},
-			
+			{field: 'matName', title: '物品名称',searchable:true}, 
+			{field: 'matType', title: '物品类型' ,searchable:true},
+			{field: 'matNum', title: '数量'},
+			{field: 'unit', title: '单位'},
+			{field: 'accessType', title: '进入',formatter: function(val,row,index){
+				return val == "1" ? '<span class="label label-success">进</span>' : '<span class="label label-warning">出</span>';
+			}},
+			{field: 'nowTime', title: '时间',formatter: dateFormat},
+
 		]	
 	});
 			

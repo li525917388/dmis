@@ -36,7 +36,7 @@ public class UserAction {
 				flag =  "success";
 			}
 		} 
-		request.getSession().setAttribute("user", user);
+		request.getSession().setAttribute("sessionUser", user);
 		String jsonString = "{\"flag\":\""+flag+"\"}";
         String json = JSONObject.fromObject(jsonString).toString();
 		response.getWriter().print(json);

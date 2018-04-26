@@ -6,6 +6,8 @@ package com.dmis.sys.entity;
  *
  */
 public class User {
+	
+	public static final String SESSION_USER = "my_123_user";
 
 	//id
 	private Long id;

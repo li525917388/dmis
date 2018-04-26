@@ -26,6 +26,8 @@ public class Menu {
 	private Integer type;
 	
 	private List<Menu> children;
+	
+	private String checked;
 
 	public Long getId() {
 		return id;
@@ -97,6 +99,14 @@ public class Menu {
 
 	public void setChildren(List<Menu> children) {
 		this.children = children;
+	}
+
+	public String getChecked() {
+		return checked;
+	}
+
+	public void setChecked(String checked) {
+		this.checked = checked;
 	}
 	
 	
