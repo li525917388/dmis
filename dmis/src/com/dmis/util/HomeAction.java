@@ -121,4 +121,17 @@ public class HomeAction {
 		
 		return "dorm/dormAllot";
 	}
+	
+	
+	/**
+	 * 来访人员记录
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping("/accessPerson")
+	public String accessPerson(HttpServletRequest request, HttpServletResponse response){
+		
+		return "other/accessPerson";
+	}
 }

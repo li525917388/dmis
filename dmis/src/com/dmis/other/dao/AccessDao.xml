@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"../../../../mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dmis.other.dao.AccessDao">
+	
+	<select id="getAccessPersons" parameterType="pageUtil" resultType="accessPerson">
+		select *  from access_person 
+		where 1=1 
+		<foreach collection="where" item="wh">
+			and ${wh.parm} ${wh.op} #{wh.value} 
+		</foreach>
+		
+		limit #{start},#{pageSize}
+	</select>
+	
+	<!-- 获得最大数 -->
+	<select id="getAccessPersonTotal" parameterType="pageUtil"  resultType="Integer">
+		select count(*) from access_person
+		
+		where 1=1 
+		<foreach collection="where" item="wh">
+			and ${wh.parm} ${wh.op} #{wh.value} 
+		</foreach>
+	</select>
+
+	<!-- 添加来访人员 -->
+	<insert id="addAccessPerson" parameterType="accessPerson">
+		insert into access_person(personName,phone,objective,personSum,accessTime,leaveTime) 
+		values(#{personName},#{phone},#{objective},#{personSum},#{accessTime},#{leaveTime})
+	</insert>
+	
+	<!-- 更新来访人员 -->
+	<update id="updateAccessPerson" parameterType="accessPerson">
+		update access_person 
+		set personName=#{personName},phone=#{phone},objective=#{objective},personSum=#{personSum},accessTime=#{accessTime},leaveTime=#{leaveTime}
+		where id=#{id}
+	</update>
+	
+	<!-- 获得人员访问实体 -->
+	<select id="getAccessPersonEntity" parameterType="java.lang.Long" resultType="accessPerson">
+		select * from access_person where id=#{id}
+	</select>
+</mapper>	

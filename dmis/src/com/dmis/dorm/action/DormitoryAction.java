@@ -10,9 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.dmis.dorm.entity.Building;
 import com.dmis.dorm.entity.DormPerson;
-import com.dmis.dorm.entity.DormType;
 import com.dmis.dorm.entity.Dormitory;
 import com.dmis.dorm.service.BedService;
 import com.dmis.dorm.service.DormitoryService;

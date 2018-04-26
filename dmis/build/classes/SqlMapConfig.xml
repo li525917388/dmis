@@ -14,6 +14,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
  	<typeAliases>
  		<package name="com.dmis.sys.entity"/>
 		<package name="com.dmis.dorm.entity"/>
+		<package name="com.dmis.other.entity"/>
 		<package name="com.dmis.util"/>
   	</typeAliases>
 	
