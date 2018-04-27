@@ -1,4 +1,4 @@
-package com.dmis.sys.service;
+package com.dmis.dorm.service;
 
 import java.util.List;
 

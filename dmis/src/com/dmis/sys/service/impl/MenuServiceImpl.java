@@ -65,4 +65,38 @@ public class MenuServiceImpl implements MenuService {
 		return menuDao.getMenusQuery();
 	}
 
+	@Override
+	public int saveMenu(Menu menu) {
+		
+		if(menu.getId() == null) return menuDao.addMenu(menu);
+		
+		else return menuDao.updateMenu(menu);
+	}
+
+	@Override
+	public Menu getMenuEntity(long id) {
+		// TODO Auto-generated method stub
+		return menuDao.getMenuEntity(id);
+	}
+
+	@Override
+	public int delMenu(long id) {
+		// TODO Auto-generated method stub
+		return menuDao.delMenu(id);
+	}
+
+	@Override
+	public int delMenus(String ids) {
+		int res = 0;
+		
+		String[] idArray = ids.split(",");
+		
+		for(int i = 0; i < idArray.length; i++){
+			
+			res = menuDao.delMenu(Long.valueOf(idArray[i]));
+		}
+		
+		return res;
+	}
+
 }

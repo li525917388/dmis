@@ -18,4 +18,32 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from menu
 	</select>
 
+	<!-- 新增菜单 -->
+	<insert id="addMenu" parameterType="menu">
+		insert into menu(menuName,menuNo,url,icon,fno,menuOrder,type) 
+		values(#{menuName},#{menuNo},#{url},#{icon},#{fno},#{menuOrder},#{type})
+	</insert>
+	
+	<!-- 更新菜单 -->
+	<update id="updateMenu" parameterType="menu">
+		update menu set 
+			menuName=#{menuName},
+			menuNo=#{menuNo},
+			url=#{url},
+			icon=#{icon},
+			fno=#{fno},
+			menuOrder=#{menuOrder},
+			type=#{type}
+		where id=#{id},
+	</update>
+	
+	<!-- 删除菜单 -->
+	<delete id="delMenu" parameterType="Long">
+		delete from menu where id=#{id}
+	</delete>
+	
+	<!-- 获得菜单实体 -->
+	<select id="getMenuEntity" parameterType="Long" resultType="menu">
+		select * from menu where id=#{id}
+	</select>
 </mapper>	

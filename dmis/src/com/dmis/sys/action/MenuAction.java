@@ -64,14 +64,69 @@ public class MenuAction {
 		List<Menu> list = menuService.getMenusQuery();
 		
 		GridView grid = new GridView();
-		grid.setMaxResults(15);
+
 		grid.setRows(list);
-		grid.setRecords(35);
 		grid.setTotal(list.size());
-		grid.setPage(1);
+
 		
 		String json = JSONObject.fromObject(grid).toString();
 		
 		response.getWriter().print(json);
+	}
+	
+	
+	/**
+	 * 跳转菜单编辑页面
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping("toMenuForm")
+	public String toMenuForm(HttpServletRequest request, HttpServletResponse response){
+		
+		String id = request.getParameter("id");
+		String oper = request.getParameter("oper");
+		
+		if("edit".equals(oper) || "view".equals(oper)){
+			
+			Menu menu = menuService.getMenuEntity(Long.valueOf(id));
+			
+			request.setAttribute("menu", menu);
+		}
+		
+		request.setAttribute("oper", oper);
+		
+		return "sys/form/menuForm";
+	}
+	
+	
+	/**
+	 * 新增菜单
+	 * @param request
+	 * @param response
+	 * @param menu
+	 * @throws IOException 
+	 */
+	@RequestMapping("saveMenu")
+	public void saveMenu(HttpServletRequest request, HttpServletResponse response,Menu menu) throws IOException{
+		
+		int res = menuService.saveMenu(menu);
+		
+		response.getWriter().print(res);
+	}
+	
+	
+	/**
+	 * 删除菜单
+	 * @param request
+	 * @param response
+	 * @throws IOException 
+	 */
+	@RequestMapping("delMenu")
+	public void delMenu(HttpServletRequest request, HttpServletResponse response,String ids) throws IOException{
+		
+		int res = menuService.delMenus(ids);
+		
+		response.getWriter().print(res);
 	}
 }

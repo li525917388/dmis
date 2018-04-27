@@ -45,42 +45,107 @@
 			closeBtn: 1,
 			//maxmin: true, //开启最大化最小化按钮
 			area: ['600px', '400px'],
-			content: '${contextPath}/other/access/toAccessMaterialForm'
+			content: '${contextPath}/sys/menu/toMenuForm'
 		});
-	}		
+	}	
+	
+	
+	//编辑
+	function editClick(oper){
 		
-	$(function(){
-			 
-		$("#role_table").bootstrapTable({
-				//sidePagination:  "/cems/quality/getAllQuality.action", //服务端处理分页
-   			url: '${contextPath}/sys/menu/getMenuList',
-   			queryParamsType:'', //默认值为 'limit' ,在默认情况下 传给服务端的参数为：offset,limit,sort
-                                    // 设置为 ''  在这种情况下传给服务器的参数为：pageSize,pageNumber
-
-   			striped: true,
-            pagination: true,
-            pageList: [2,20,50,100],
-            pageSize:2,
-            pageNumber:1,
-            sidePagination:'server',//设置为服务器端分页
-   			columns: [
-   				{checkbox: true}, 
-   				{field: 'id', title: '编号'}, 
-       			{field: 'menuName', title: '菜单名称名称'}, 
-    			{field: 'menuNo', title: '菜单编码' },
-    			{field: 'type', title: '菜单类型' ,formatter: function(val,row,index){
-    				return val == "1" ? '<span class="label label-success">目录</span>' : '<span class="label label-warning">菜单</span>';
-    			}},
-    			{field: 'url', title: 'url' },
-    			{field: 'icon', title: '图标'},
-    			{field: 'fno', title: '上级菜单编码' },
-    			{field: 'menuOrder', title: '排序'},
-    			
-    		]	
-		});
+		var rows = $("#role_table").bootstrapTable("getSelections");
+		
+		if(rows.length == 1){
 			
+			layer.open({
+				type: 2,
+				title: '新增',
+				shadeClose: true,
+				shade: 0.5,
+				closeBtn: 1,
+				//maxmin: true, //开启最大化最小化按钮
+				area: ['600px', '400px'],
+				content: '${contextPath}/sys/menu/toMenuForm?oper='+ oper + "&id=" + rows[0].id
+			});
+		}else{
+			
+			layer.msg("请选择一条数据");
+		}
+		
+	}
+	
+	
+	//删除
+	function delClick(){
+		var selects = $("#role_table").bootstrapTable("getSelections");
+		if(selects.length > 0){
+			//询问框
+			layer.confirm('是否删除数据？', {
+				btn: ['确定','取消'] //按钮
+			}, function(ind){
+				var ids = "";
+				for(var i in selects){
+					ids += selects[i].id + ",";
+				}
+				
+				//删除请求
+				$.ajax({
+					url: "${contextPath}/sys/menu/delMenu",
+					type: "post",
+					data: {oper:'del', ids:ids},
+					success: function(res){
+						if(res != 0){
+							parent.layer.msg("删除成功");
+							searchBtn();
+							layer.close(ind);
+						}else{
+							layer.msg("删除失败");
+						}
+					}
+				});
+			}, function(){
+				
+			});
+
+		}else{
+			layer.msg("至少选择一条数据");
+		}
+	}
+	
+	//刷新
+	function searchBtn(){
+		$("#role_table").bootstrapTable("refresh","${contextPath}/sys/menu/getMenuList");
+	}	
+		
+
+			 
+	$("#role_table").bootstrapTable({
+		//sidePagination:  "/cems/quality/getAllQuality.action", //服务端处理分页
+		url: '${contextPath}/sys/menu/getMenuList',
+		queryParamsType:'', //默认值为 'limit' ,在默认情况下 传给服务端的参数为：offset,limit,sort
+                                   // 设置为 ''  在这种情况下传给服务器的参数为：pageSize,pageNumber
+		clickToSelect: true,//点击行即可选中单选/复选框
+ 		striped: true,
+		pagination: true,
+		pageList: [10,20,50,100],
+		pageSize:10,
+		pageNumber:1,
+		sidePagination:'server',//设置为服务器端分页
+		columns: [
+			{checkbox: true}, 
+			{field: 'id', title: '编号'}, 
+		 			{field: 'menuName', title: '菜单名称名称'}, 
+			{field: 'menuNo', title: '菜单编码' },
+			{field: 'type', title: '菜单类型' ,formatter: function(val,row,index){
+				return val == "1" ? '<span class="label label-success">目录</span>' : '<span class="label label-warning">菜单</span>';
+			}},
+			{field: 'url', title: 'url' },
+			{field: 'icon', title: '图标'},
+			{field: 'fno', title: '上级菜单编码' },
+			{field: 'menuOrder', title: '排序'},
+			
+		]	
 	});
 
-			
 </script>
 </html>

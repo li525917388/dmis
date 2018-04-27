@@ -24,4 +24,36 @@ public interface MenuService {
 	 * @return
 	 */
 	public List<Menu> getMenusQuery();
+	
+	
+	/**
+	 * 保存菜单
+	 * @param menu
+	 * @return
+	 */
+	public int saveMenu(Menu menu);
+	
+	
+	/**
+	 * 获得菜单实体
+	 * @param id
+	 * @return
+	 */
+	public Menu getMenuEntity(long id);
+	
+	
+	/**
+	 * 删除菜单
+	 * @param id
+	 * @return
+	 */
+	public int delMenu(long id);
+	
+	
+	/**
+	 * 批量删除菜单
+	 * @param id
+	 * @return
+	 */
+	public int delMenus(String ids);
 }

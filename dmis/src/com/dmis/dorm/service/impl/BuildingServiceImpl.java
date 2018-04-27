@@ -1,4 +1,4 @@
-package com.dmis.sys.service.impl;
+package com.dmis.dorm.service.impl;
 
 import java.util.List;
 
@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.dmis.dorm.dao.BuildingDao;
 import com.dmis.dorm.entity.Building;
-import com.dmis.sys.service.BuildingService;
+import com.dmis.dorm.service.BuildingService;
 
 @Service
 public class BuildingServiceImpl implements BuildingService{

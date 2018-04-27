@@ -11,7 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.dmis.dorm.entity.Building;
-import com.dmis.sys.service.BuildingService;
+import com.dmis.dorm.service.BuildingService;
 import com.dmis.util.GridView;
 
 import net.sf.json.JSONArray;

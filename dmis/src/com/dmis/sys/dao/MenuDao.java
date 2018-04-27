@@ -24,4 +24,36 @@ public interface MenuDao {
 	 * @return
 	 */
 	public List<Menu> getMenusQuery();
+	
+	
+	/**
+	 * 新增菜单
+	 * @param menu
+	 * @return
+	 */
+	public int addMenu(Menu menu);
+	
+	
+	/**
+	 * 更新菜单
+	 * @param menu
+	 * @return
+	 */
+	public int updateMenu(Menu menu);
+	
+	
+	/**
+	 * 删除菜单
+	 * @param id
+	 * @return
+	 */
+	public int delMenu(long id);
+	
+	
+	/**
+	 * 获得菜单实体
+	 * @param id
+	 * @return
+	 */
+	public Menu getMenuEntity(long id);
 }
