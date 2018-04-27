@@ -45,6 +45,21 @@ public class UserAction {
 		response.getWriter().print(json);
 	}
 	
+	
+	/**
+	 * 
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping("exit")
+	public String exit(HttpServletRequest request, HttpServletResponse response){
+		
+		request.getSession().removeAttribute("sessionUser");
+		
+		return "redirect:/home/index";
+	}
+	
 	@RequestMapping("toUser")
 	public String toUser(HttpServletRequest request, HttpServletResponse response){
 		

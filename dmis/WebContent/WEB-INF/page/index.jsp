@@ -10,7 +10,7 @@
     <title>CEMS - 登录</title>
     <script src="${contextPath}/static/hplus/js/table/jquery-3.1.1.min.js"></script>
     <link href="${contextPath}/static/hplus/css/bootstrap.min.css" rel="stylesheet">
-    <link href="${contextPath}/static/css/font-awesome.min.css" rel="stylesheet">
+    <link href="${contextPath}/static/hplus/css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
     <link href="${contextPath}/static/hplus/css/animate.min.css" rel="stylesheet">
     <link href="${contextPath}/static/hplus/css/style.min.css" rel="stylesheet">
     <link href="${contextPath}/static/hplus/css/login.min.css" rel="stylesheet">
@@ -29,10 +29,11 @@
             <div class="col-sm-7">
                 <div class="signin-info">
                     <div class="logopanel m-b">
-                        <h1>[ 学生宿舍管理系统 ]</h1>
+                        <h1>[DMIS 宿舍管理信息系统 ]</h1>
                     </div>
                     <div class="m-b"></div>
-                    <h4>欢迎使用 <strong>学生宿舍管理系统</strong></h4>
+                    <h4><strong>Dormitory management information system</strong></h4>
+                    <!-- <h4>欢迎使用 <strong>学生宿舍管理信息系统</strong></h4> -->
                     <ul class="m-b">
                         <li><i class="fa fa-arrow-circle-o-right m-r-xs"></i> 优势一</li>
                         <li><i class="fa fa-arrow-circle-o-right m-r-xs"></i> 优势二</li>
@@ -62,12 +63,12 @@
         </div>
         <div class="signup-footer">
             <div class="pull-left">
-                &copy; Student dormitory management system
+                &copy; 2018 DMIS 北方民族大学试用版本
             </div>
         </div>
     </div>
-     <script>
-           $("#login_btn").click(function(){
+	<script type="text/javascript">
+    	$("#login_btn").click(function(){
            var username = $("#username").val() ;
            var password = $("#password").val() ;
            		$.ajax({

@@ -17,6 +17,7 @@
     <meta http-equiv="refresh" content="0;ie.html" />
     <![endif]-->
 
+	<link rel="stylesheet" href="${contextPath}/static/layer/mobile/need/layer.css">
     <link rel="shortcut icon" href="/dmis/static/hplus/favicon.ico">
     <link href="/dmis/static/hplus/css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
     <link href="/dmis/static/hplus/css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
@@ -42,16 +43,16 @@
                                 </span>
                             </a>
                             <ul class="dropdown-menu animated fadeInRight m-t-xs">
-                                <li><a class="J_menuItem" href="form_avatar.html">修改头像</a>
+                                <li><a class="J_menuItem" href="">修改头像</a>
                                 </li>
-                                <li><a class="J_menuItem" href="profile.html">个人资料</a>
+                                <li><a class="J_menuItem" href="">个人资料</a>
                                 </li>
-                                <li><a class="J_menuItem" href="contacts.html">联系我们</a>
+                                <li><a class="J_menuItem" href="">联系我们</a>
                                 </li>
-                                <li><a class="J_menuItem" href="mailbox.html">信箱</a>
+                                <li><a class="J_menuItem" onclick="changePwd()">修改密码</a>
                                 </li>
                                 <li class="divider"></li>
-                                <li><a href="/cems/main/login/loginout.jsp">安全退出</a>
+                                <li><a  onclick="exitLogin()">安全退出</a>
                                 </li>
                             </ul>
                         </div>
@@ -164,7 +165,7 @@
                         </li>
                     </ul>
                 </div>
-                <a href="/cems/main/login/loginout.jsp" class="roll-nav roll-right J_tabExit"><i class="fa fa fa-sign-out"></i> 退出</a>
+                <a onclick="exitLogin()" class="roll-nav roll-right J_tabExit"><i class="fa fa fa-sign-out"></i> 退出</a>
             </div>
             <div class="row J_mainContent" id="content-main">
                 <iframe class="J_iframe" name="iframe0" width="100%" height="100%" src="${contextPath }/static/other/texiao/index2.html" frameborder="0" data-id="homel" seamless></iframe>
@@ -389,17 +390,40 @@
             </a>
         </div>
     </div>
+    
+    
     <script src="/dmis/static/hplus/js/jquery.min.js?v=2.1.4"></script>
     <script src="/dmis/static/hplus/js/bootstrap.min.js?v=3.3.6"></script>
     <script src="/dmis/static/hplus/js/plugins/metisMenu/jquery.metisMenu.js"></script>
     <script src="/dmis/static/hplus/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
-    <script src="/dmis/static/layer/layer.js"></script>
+    <script src="${contextPath}/static/layer/layer.js"></script>
     <script src="/dmis/static/hplus/js/hplus.min.js?v=4.1.0"></script>
     <script type="text/javascript" src="/dmis/static/hplus/js/contabs.min.js"></script>
     <script src="/dmis/static/hplus/js/plugins/pace/pace.min.js"></script>
     
 </body>
 
+<script type="text/javascript">
 
+//退出登录
+function exitLogin(){
+	
+	layer.confirm('确定退出登录？', {
+		btn: ['确定','取消'] //按钮
+	}, function(ind){
+		
+		window.location.href="${contextPath}/sys/user/exit";
+		
+	},function(){
+		
+	}); 
+}
+
+
+//修改密码
+function changePwd(){
+	
+}
+</script>
 <!-- Mirrored from www.zi-han.net/theme/hplus/ by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Jan 2016 14:17:11 GMT -->
 </html>

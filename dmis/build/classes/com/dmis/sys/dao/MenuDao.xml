@@ -34,7 +34,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			fno=#{fno},
 			menuOrder=#{menuOrder},
 			type=#{type}
-		where id=#{id},
+		where id=#{id}
 	</update>
 	
 	<!-- 删除菜单 -->
