@@ -12,7 +12,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="renderer" content="webkit">
     <meta http-equiv="Cache-Control" content="no-siteapp" />
-    <title>CEMS 学生成绩评价系统</title>
+    <title>DMIS 学生宿舍管理系统</title>
     <!--[if lt IE 9]>
     <meta http-equiv="refresh" content="0;ie.html" />
     <![endif]-->
@@ -167,10 +167,10 @@
                 <a href="/cems/main/login/loginout.jsp" class="roll-nav roll-right J_tabExit"><i class="fa fa fa-sign-out"></i> 退出</a>
             </div>
             <div class="row J_mainContent" id="content-main">
-                <iframe class="J_iframe" name="iframe0" width="100%" height="100%" src="${contextPath }/home/home" frameborder="0" data-id="homel" seamless></iframe>
+                <iframe class="J_iframe" name="iframe0" width="100%" height="100%" src="${contextPath }/static/other/texiao/index2.html" frameborder="0" data-id="homel" seamless></iframe>
             </div>
             <div class="footer">
-                <div class="pull-right">&copy; 2016 <a href="http://www.cnblogs.com/shenjg/" target="_blank">shenjg's blog</a>
+                <div class="pull-right">&copy; 2018 <a href="http://www.cnblogs.com/shenjg/" target="_blank">北方民族大学</a>
                 </div>
             </div>
         </div>

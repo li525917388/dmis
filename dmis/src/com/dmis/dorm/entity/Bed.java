@@ -15,7 +15,7 @@ public class Bed {
 	//宿舍规格
 	private Long dormType;
 	
-	//宿舍规格
+	//
 	private Long summary;
 	
 	//床位类型

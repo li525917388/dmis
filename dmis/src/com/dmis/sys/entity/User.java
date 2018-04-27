@@ -20,6 +20,15 @@ public class User {
 	
 	//姓名
 	private String name;
+	
+	//性别
+	private int sex;
+	
+	//班级
+	private Long classId;
+	
+	//头像
+	private String headIcon;
 
 	public Long getId() {
 		return id;
@@ -51,6 +60,34 @@ public class User {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public int getSex() {
+		return sex;
+	}
+
+	public void setSex(int sex) {
+		this.sex = sex;
+	}
+
+	public Long getClassId() {
+		return classId;
+	}
+
+	public void setClassId(Long classId) {
+		this.classId = classId;
+	}
+
+	public String getHeadIcon() {
+		return headIcon;
+	}
+
+	public void setHeadIcon(String headIcon) {
+		this.headIcon = headIcon;
+	}
+
+	public static String getSessionUser() {
+		return SESSION_USER;
 	}
 
 	

@@ -36,4 +36,52 @@ public interface RoleService {
 	 * @param rid
 	 */
 	public void newRoleMenu(String mids,long rid);
+	
+	/**
+	 * 根据用户id获得所有角色
+	 * @param rid
+	 * @return
+	 */
+	public List<Role> getRoleByUser(long uid);
+	
+	
+	/**
+	 * 重新授权角色
+	 * @param mids
+	 * @param rid
+	 */
+	public void newUserRole(String rids,long uid);
+	
+	
+	/**
+	 * 保存角色
+	 * @param role
+	 * @return
+	 */
+	public int saveRole(Role role);
+	
+	
+	/**
+	 * 删除角色
+	 * @param id
+	 * @return
+	 */
+	public int delRole(long id);
+	
+	
+	/**
+	 * 批量删除角色
+	 * @param ids
+	 * @return
+	 */
+	public int delRoles(String ids);
+	
+	
+	
+	/**
+	 * 获得角色实体
+	 * @param id
+	 * @return
+	 */
+	public Role getRoleEntity(long id);
 }

@@ -6,66 +6,172 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>用户管理</title>
-
-	<!-- page specific plugin styles -->
-	<link rel="stylesheet" href="${contextPath}/static/jqgrid/ui.jqgrid-bootstrap.css" />
-	<link rel="stylesheet" href="${contextPath}/static/css/bootstrap.min.css" />
-
-	<script src='${contextPath}/static/js/jquery.min.js'></script>
-	<script src='${contextPath}/static/js/bootstrap.min.js'></script>
-	<script src='${contextPath}/static/jqgrid/jquery.jqGrid.min.js'></script>
-	<script src="${contextPath}/static/jqgrid/grid.locale-cn.js"></script>
+<title>Insert title here</title>
+	<link rel="stylesheet" href="${contextPath}/static/layer/mobile/need/layer.css">
+	<link rel="stylesheet" href="${contextPath}/static/hplus/js/table/bootstrap.min.css">
+	<link rel="stylesheet" href="${contextPath}/static/hplus/js/table/bootstrap-table.css">
 	
+	
+	<script src="${contextPath}/static/hplus/js/table/jquery-3.1.1.min.js"></script>
+	<script src="${contextPath}/static/layer/layer.js"></script>
+	<script src="${contextPath}/static/hplus/js/table/bootstrap.min.js"></script>
+	<script src="${contextPath}/static/hplus/js/table/bootstrap-table.js"></script>
+	<script src="${contextPath}/static/hplus/js/table/bootstrap-table-zh-CN.js"></script>
+
 </head>
 <body>
-	<div >
+	<div id="user_search" style="margin: 5px 0px">
 		
-		<table id="user_grid"></table>
-		<div id="user_pager"></div>
+		<button onclick="addClick()">新增</button>
+		<button onclick="editClick('edit')">修改</button>
+		<button onclick="delClick()">删除</button>
+		<button onclick="editClick('view')">查看</button>
+
+		<button onclick="searchBtn()">搜索</button>
 	</div>
-	
-	
-	<script type="text/javascript">
-		
-		$("#user_grid").jqGrid({
-	        url: '${contextPath}/sys/user/getUserList',
-	        datatype: "json",
-	        colModel: [			
-				{ label: 'id', name: 'id', index: 'id', width: 50, key: true },
-				{ label: '编码名称', name: 'codename', index: 'codeName', width: 80 }, 			
-				{ label: '编号', name: 'codeno', index: 'codeNo', width: 80 }, 			
-				/*{ label: '', name: 'codestr', index: 'codeStr', width: 80 },*/ 			
-				{ label: '描述', name: 'summary', index: 'summary', width: 80 }, 			
-				{ label: '标记', name: 'flag', index: 'flag', width: 80 }, 			
-				{ label: '码段长度', name: 'codelength', index: 'codeLength', width: 80 }			
-	        ],
-			viewrecords: true,
-	        height: "100%",
-	        rowNum: 10,
-			rowList : [10,30,50],
-	        rownumbers: true, 
-	        rownumWidth: 25, 
-	        autowidth:true,
-	        multiselect: true,
-	        pager: "#user_pager",
-	        jsonReader : {
-	            root: "page.list",
-	            page: "page.currPage",
-	            total: "page.totalPage",
-	            records: "page.totalCount"
-	        },
-	        prmNames : {
-	            page:"page", 
-	            rows:"limit", 
-	            order: "order"
-	        },
-	        gridComplete:function(){
-	        	//隐藏grid底部滚动条
-	        	$("#jqGrid").closest(".ui-jqgrid-bdiv").css({ "overflow-x" : "hidden" }); 
-	        }
-	    });
-	
-	</script>
+	<table id="user_table"></table>
+
 </body>
+<script type="text/javascript">
+	//新增
+	function addClick(){
+		
+		layer.open({
+			type: 2,
+			title: '新增',
+			shadeClose: true,
+			shade: 0.5,
+			closeBtn: 1,
+			//maxmin: true, //开启最大化最小化按钮
+			area: ['600px', '400px'],
+			content: '${contextPath}/sys/user/toUserForm'
+		});
+	}	
+	
+	
+	//编辑
+	function editClick(oper){
+		
+		var rows = $("#user_table").bootstrapTable("getSelections");
+		
+		if(rows.length == 1){
+			
+			layer.open({
+				type: 2,
+				title: '新增',
+				shadeClose: true,
+				shade: 0.5,
+				closeBtn: 1,
+				//maxmin: true, //开启最大化最小化按钮
+				area: ['600px', '400px'],
+				content: '${contextPath}/sys/user/toUserForm?oper='+ oper + "&id=" + rows[0].id
+			});
+		}else{
+			
+			layer.msg("请选择一条数据");
+		}
+		
+	}
+	
+	
+	//删除
+	function delClick(){
+		var selects = $("#user_table").bootstrapTable("getSelections");
+		if(selects.length > 0){
+			//询问框
+			layer.confirm('是否删除数据？', {
+				btn: ['确定','取消'] //按钮
+			}, function(ind){
+				var ids = "";
+				for(var i in selects){
+					ids += selects[i].id + ",";
+				}
+				
+				//删除请求
+				$.ajax({
+					url: "${contextPath}/sys/user/delUser",
+					type: "post",
+					data: {oper:'del', ids:ids},
+					success: function(res){
+						if(res != 0){
+							parent.layer.msg("删除成功");
+							searchBtn();
+							layer.close(ind);
+						}else{
+							layer.msg("删除失败");
+						}
+					}
+				});
+			}, function(){
+				
+			});
+	
+		}else{
+			layer.msg("至少选择一条数据");
+		}
+	}
+	
+	//刷新
+	function searchBtn(){
+		$("#user_table").bootstrapTable("refresh","${contextPath}/sys/user/getUsers");
+	}
+	
+	
+	//打开授权菜单
+	function openUserMenu(uid){
+		parent.layer.open({
+			type: 2,
+			title: '新增',
+			shadeClose: true,
+			shade: 0.4,
+			closeBtn: 1,
+			maxmin: true, //开启最大化最小化按钮
+			area: ['400px', '500px'],
+			content: '${contextPath}/sys/role/toUserRole?uid='+ uid
+		});
+	}
+		
+	$(function(){
+			 
+		$("#user_table").bootstrapTable({
+				//sidePagination:  "/cems/quality/getAllQuality.action", //服务端处理分页
+   			url: '${contextPath}/sys/user/getUsers',
+   			queryParamsType:'', //默认值为 'limit' ,在默认情况下 传给服务端的参数为：offset,limit,sort
+                                    // 设置为 ''  在这种情况下传给服务器的参数为：pageSize,pageNumber
+
+   			clickToSelect: true,//点击行即可选中单选/复选框
+ 			striped: true,
+			pagination: true,
+			pageList: [10,20,50,100],
+            pageSize:10,
+            pageNumber:1,
+            sidePagination:'server',//设置为服务器端分页
+   			columns: [
+   				{checkbox: true}, 
+   				{field: 'id', title: 'id'}, 
+       			{field: 'username', title: '用户名'}, 
+    			{field: 'name', title: '姓名' },
+    			{field: 'sex', title: '性别',formatter:function(value,row,index){
+					return value==1 ? '<span class="label label-success">男</span>' : '<span class="label label-warning">女</span>';
+				}},
+    			{field: 'classId', title: '班级'}, 
+    			{field: 'headIcon', title: '头像' },
+    			{
+	                title: '操作',
+	                field: 'id',
+	                align: 'center',
+	                formatter:function(value,row,index){  
+                   		var e = '<a onclick="openUserMenu(\''+ row.id +'\')">授权</a> ';  
+                  	 	var d = '<a onclick="deletes(\''+ row.id +'\')">删除</a> ';  
+                   		var d = '<a onclick="addCourse(\''+ row.id +'\')">添加</a> ';  
+                        return e;  
+                 	} 
+            	}
+    		]	
+		});
+			
+	});
+
+			
+</script>
 </html>

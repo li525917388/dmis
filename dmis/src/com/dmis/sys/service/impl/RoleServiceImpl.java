@@ -71,5 +71,70 @@ public class RoleServiceImpl implements RoleService {
 			roleDao.addRoleMenu(map);
 		}
 	}
+	
+	
+	@Override
+	public List<Role> getRoleByUser(long uid) {
+		// TODO Auto-generated method stub
+		return roleDao.getRoleByUser(uid);
+	}
+
+
+	
+	@Override
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
+	public void newUserRole(String rids, long uid) {
+		
+		String[] ridArray = rids.split(",");
+		
+		roleDao.delUserRole(uid);
+		
+		for(String rid : ridArray){
+			
+			Map<String, Long> map = new HashMap<String, Long>();
+			map.put("rid", Long.valueOf(rid));
+			map.put("uid", uid);
+			
+			roleDao.addUserRole(map);
+		}
+	}
+
+
+	@Override
+	public int saveRole(Role role) {
+		
+		if(role.getId() == null) return roleDao.addRole(role);
+		
+		return roleDao.updateRole(role);
+	}
+
+
+	@Override
+	public int delRole(long id) {
+
+		return roleDao.delRole(id);
+	}
+
+
+	@Override
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
+	public int delRoles(String ids) {
+		int res = 0;
+		
+		String[] idArray = ids.split(",");
+		
+		for(String id : idArray){
+			
+			res = roleDao.delRole(Long.valueOf(id));
+		}
+		return res;
+	}
+
+
+	@Override
+	public Role getRoleEntity(long id) {
+		
+		return roleDao.getRoleEntity(id);
+	}
 
 }

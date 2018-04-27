@@ -14,4 +14,52 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="getUserByUsername" parameterType="java.lang.String" resultType="user">
 		select * from user where username=#{username}
 	</select>
+	
+	<!-- 获得角色列表 -->
+	<select id="getUsers" parameterType="pageUtil" resultType="user">
+		select * from user
+		where 1=1 
+		<foreach collection="where" item="wh">
+			and ${wh.parm} ${wh.op} #{wh.value} 
+		</foreach>
+		limit #{start},#{pageSize}
+	</select>
+	
+	
+	<select id="getUserTotal" parameterType="pageUtil"  resultType="Integer">
+		select count(*) from user
+		where 1=1 
+		<foreach collection="where" item="wh">
+			and ${wh.parm} ${wh.op} #{wh.value} 
+		</foreach>
+	</select>
+	
+	
+	<!-- 新增菜角色-->
+	<insert id="addUser" parameterType="user">
+		insert into user(username,pwd,name,sex,classId,headIcon) 
+		values(#{username},#{pwd},#{name},#{sex},#{classId},#{headIcon})
+	</insert>
+	
+	<!-- 更新角色 -->
+	<update id="updateUser" parameterType="user">
+		update user set 
+			username=#{username},
+			pwd=#{pwd},
+			name=#{name},
+			sex=#{sex},
+			classId=#{classId},
+			headIcon=#{headIcon}
+		where id=#{id},
+	</update>
+	
+	<!-- 删除角色 -->
+	<delete id="delUser" parameterType="Long">
+		delete from user where id=#{id}
+	</delete>
+	
+	<!-- 获得角色实体 -->
+	<select id="getUserEntity" parameterType="Long" resultType="user">
+		select * from user where id=#{id}
+	</select>
 </mapper>	

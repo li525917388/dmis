@@ -188,7 +188,13 @@
 			{checkbox: true}, 
 			{field: 'id', title: 'id'}, 
 			{field: 'bedNo', title: '床位编号',searchable:true}, 
-			{field: 'bedType', title: '床位类型' ,searchable:true},
+			{field: 'bedType', title: '床位类型' ,searchable:true,formatter:function(value,row,index){
+				if(value == "Single") return '<span class="label label-success">单层</span>';
+				else if(value == "Up") return '<span class="label label-warning">上铺</span>';
+				else if(value == "Down") return '<span class="label label-info">下铺</span>';
+				else return '<span class="label label-error">未知</span>';
+				
+			}},
 			{field: 'dormType', title: '宿舍规格',searchable:true},
 			{title: '操作',field: 'id',align: 'center',
 				formatter:function(value,row,index){  

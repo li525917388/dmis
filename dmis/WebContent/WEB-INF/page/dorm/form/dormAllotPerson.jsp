@@ -20,7 +20,7 @@
 	<script src="${contextPath}/static/hplus/js/table/bootstrap-table-zh-CN.js"></script>
 </head>
 <body>
-	<input id="dormId" value="${dormId }">
+	<input id="dormId" type="hidden" value="${dormId }">
 	<table id="dormPerson_table"></table>
 	
 	<!-- 加人弹出框 -->

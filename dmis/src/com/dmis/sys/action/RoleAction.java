@@ -91,4 +91,106 @@ public class RoleAction {
 		
 		response.getWriter().print("ok");
 	}
+	
+	
+	@RequestMapping("toUserRole")
+	public String toUserRole(HttpServletRequest request,HttpServletResponse response){
+		
+		String uid = request.getParameter("uid");
+		
+		request.setAttribute("userId", uid);
+		
+		return "sys/form/userRole";
+	}
+	
+	
+	/**
+	 * 获得树角色
+	 * @param request
+	 * @param response
+	 * @param rid
+	 * @throws IOException
+	 */
+	@RequestMapping("getRoleTree")
+	public void getRoleTree(HttpServletRequest request,HttpServletResponse response,long uid) throws IOException{
+		response.setContentType("text/html;charset=utf-8");
+		
+		List<Role> list = roleService.getRoleByUser(uid);
+		
+		String json = JSONArray.fromObject(list).toString();
+		
+		response.getWriter().print(json);
+	}
+	
+	
+	/**
+	 * 重新授权角色
+	 * @param request
+	 * @param response
+	 * @throws IOException 
+	 */
+	@RequestMapping("saveUserRole")
+	public void saveUserRole(HttpServletRequest request,HttpServletResponse response,String rids,long uid) throws IOException{
+		
+		roleService.newUserRole(rids, uid);
+		
+		response.getWriter().print("ok");
+	}
+	
+	
+	
+	/**
+	 * 跳转编辑页面
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping("toRoleForm")
+	public String toRoleForm(HttpServletRequest request, HttpServletResponse response){
+		
+		String id = request.getParameter("id");
+		String oper = request.getParameter("oper");
+		
+		if("edit".equals(oper) || "view".equals(oper)){
+			
+			Role role = roleService.getRoleEntity(Long.valueOf(id));
+			
+			request.setAttribute("role", role);
+		}
+		
+		request.setAttribute("oper", oper);
+		
+		return "sys/form/roleForm";
+	}
+	
+	
+	/**
+	 * 保存
+	 * @param request
+	 * @param response
+	 * @param role
+	 * @throws IOException 
+	 */
+	@RequestMapping("saveRole")
+	public void saveRole(HttpServletRequest request, HttpServletResponse response,Role role) throws IOException{
+		
+		int res = roleService.saveRole(role);
+		
+		response.getWriter().print(res);
+	}
+	
+	
+	/**
+	 * 删除
+	 * @param request
+	 * @param response
+	 * @throws IOException 
+	 */
+	@RequestMapping("delRole")
+	public void delRole(HttpServletRequest request, HttpServletResponse response,String ids) throws IOException{
+		
+		int res = roleService.delRoles(ids);
+		
+		response.getWriter().print(res);
+	}
 }

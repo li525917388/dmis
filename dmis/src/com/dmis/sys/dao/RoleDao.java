@@ -31,4 +31,54 @@ public interface RoleDao {
 	 * @return
 	 */
 	public int delRoleMenu(long rid);
+	
+	
+	public List<Role> getRoleByUser(long uid);
+	
+	/**
+	 * 用户添加角色
+	 * @param map
+	 * @return
+	 */
+	public int addUserRole(Map<String, Long> map);
+	
+	
+	/**
+	 * 删除用户下角色
+	 * @param rid
+	 * @return
+	 */
+	public int delUserRole(long uid);
+	
+	
+	/**
+	 * 新增角色
+	 * @param role
+	 * @return
+	 */
+	public int addRole(Role role);
+	
+	
+	/**
+	 * 更新角色
+	 * @param role
+	 * @return
+	 */
+	public int updateRole(Role role);
+	
+	
+	/**
+	 * 删除角色
+	 * @param id
+	 * @return
+	 */
+	public int delRole(long id);
+	
+	
+	/**
+	 * 获得角色实体
+	 * @param id
+	 * @return
+	 */
+	public Role getRoleEntity(long id);
 }

@@ -29,7 +29,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select m.*,case when rm1.mid is null then 'false' else 'true' end as checked from menu m 
 		left join (select * from role_menu rm where rm.rid=#{rid})rm1 on rm1.mid=m.id
 	</select>
-
+	
 	<insert id="addRoleMenu" parameterType="java.util.Map">
 		insert into role_menu(rid,mid) 
 		values(#{rid},#{mid})
@@ -39,4 +39,49 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<delete id="delRoleMenu" parameterType="java.lang.Long">
 		delete from role_menu where rid=#{rid}
 	</delete>
+	
+	
+	<!-- 获得用户下角色-->
+	<select id="getRoleByUser" parameterType="java.lang.Long" resultType="role">
+		select r.*,case when ur1.rid is null then 'false' else 'true' end as checked from role r 
+		left join (select * from user_role ur where ur.uid=#{uid})ur1 on ur1.rid=r.id
+		order by ur1.rid desc
+	</select>
+	
+	<!-- 添加用户角色 -->
+	<insert id="addUserRole" parameterType="java.util.Map">
+		insert into user_role(uid,rid) 
+		values(#{uid},#{rid})
+	</insert>
+	
+	
+	<delete id="delUserRole" parameterType="java.lang.Long">
+		delete from user_role where uid=#{uid}
+	</delete>
+	
+	
+	<!-- 新增菜角色-->
+	<insert id="addRole" parameterType="role">
+		insert into role(roleName,roleNo,summary) 
+		values(#{roleName},#{roleNo},#{summary})
+	</insert>
+	
+	<!-- 更新角色 -->
+	<update id="updateRole" parameterType="role">
+		update role set 
+			roleName=#{roleName},
+			roleNo=#{roleNo},
+			summary=#{summary}
+		where id=#{id},
+	</update>
+	
+	<!-- 删除角色 -->
+	<delete id="delRole" parameterType="Long">
+		delete from role where id=#{id}
+	</delete>
+	
+	<!-- 获得角色实体 -->
+	<select id="getRoleEntity" parameterType="Long" resultType="role">
+		select * from role where id=#{id}
+	</select>
 </mapper>	

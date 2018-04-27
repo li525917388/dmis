@@ -45,7 +45,7 @@ public class HomeAction {
 		
 		User user = (User) request.getSession().getAttribute("sessionUser");
 		
-		if(user == null) return "index";
+		if(user == null) return "redirect:index";
 		
 		List<Menu> menus = menuService.getMenuByUid(user.getId());
 		

@@ -14,6 +14,11 @@ public class Role {
 	
 	//
 	private String roleNo;
+	
+	//描述
+	private String summary;
+	
+	private String checked;
 
 	public Long getId() {
 		return id;
@@ -37,6 +42,22 @@ public class Role {
 
 	public void setRoleNo(String roleNo) {
 		this.roleNo = roleNo;
+	}
+
+	public String getSummary() {
+		return summary;
+	}
+
+	public void setSummary(String summary) {
+		this.summary = summary;
+	}
+
+	public String getChecked() {
+		return checked;
+	}
+
+	public void setChecked(String checked) {
+		this.checked = checked;
 	}
 	
 	
