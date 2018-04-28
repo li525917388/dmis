@@ -71,9 +71,20 @@ public class UserAction {
 	public void getUsers(HttpServletRequest request,HttpServletResponse response,int pageSize, int pageNumber) throws IOException{
 		response.setContentType("text/html;charset=utf-8");
 		
+		String username = request.getParameter("username");
+		String name = request.getParameter("name");
+		
 		PageUtil pageUtil = new PageUtil();
 		pageUtil.setPageSize(pageSize);
 		pageUtil.setPage(pageNumber);
+		
+		if(username != null && !"".equals(username)){
+			pageUtil.addLike("username", username);
+		}
+		
+		if(name != null && !"".equals(name)){
+			pageUtil.addLike("name", name);
+		}
 		
 		ResultAndTotal<User> res = userService.searchUser(pageUtil);
 		

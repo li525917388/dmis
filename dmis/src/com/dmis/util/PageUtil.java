@@ -39,6 +39,16 @@ public class PageUtil {
 		where.add(w);
 		
 	}
+	
+	
+	public void addLike(String parm, Object value){
+		Where w = new Where();
+		w.setParm(parm);
+		w.setOp(" like ");
+		w.setValue("%" + value.toString() + "%");
+		
+		where.add(w);
+	}
 
 	public int getPageSize() {
 		return pageSize;

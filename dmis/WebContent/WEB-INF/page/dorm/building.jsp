@@ -7,14 +7,16 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
+	<link rel="stylesheet" href="${contextPath}/static/layer/mobile/need/layer.css">
 	<link rel="stylesheet" href="${contextPath}/static/hplus/js/table/bootstrap.min.css">
-	<link rel="stylesheet" href="${contextPath}/static/js/bootstrap-dialog.min.css">
 	<link rel="stylesheet" href="${contextPath}/static/hplus/js/table/bootstrap-table.css">
+	
+	
 	<script src="${contextPath}/static/hplus/js/table/jquery-3.1.1.min.js"></script>
+	<script src="${contextPath}/static/layer/layer.js"></script>
 	<script src="${contextPath}/static/hplus/js/table/bootstrap.min.js"></script>
 	<script src="${contextPath}/static/hplus/js/table/bootstrap-table.js"></script>
 	<script src="${contextPath}/static/hplus/js/table/bootstrap-table-zh-CN.js"></script>
-	<script src="${contextPath}/static/js/bootstrap-dialog.min.js"></script>
 
 </head>
 <body>
@@ -23,8 +25,22 @@
 
 </body>
 <script type="text/javascript">
+	
+	//查看楼管员
+	function lookBuildPipe(bid){
+		parent.layer.open({
+			type: 2,
+			title: '楼管员',
+			shadeClose: true,
+			shade: 0.5,
+			closeBtn: 1,
+			//maxmin: true, //开启最大化最小化按钮
+			area: ['600px', '400px'],
+			content: '${contextPath}/dorm/building/toBuildPipe?bid='+ bid
+		});
+	}
 		
-		
+	
 	$(function(){
 			 
 		$("#role_table").bootstrapTable({
@@ -50,7 +66,7 @@
 	                field: 'id',
 	                align: 'center',
 	                formatter:function(value,row,index){  
-                   		var e = '<a onclick="edit(\''+ row.id +'\')">编辑</a> ';  
+                   		var e = '<a onclick="lookBuildPipe(\''+ row.id +'\')">管理员</a> ';  
                   	 	var d = '<a onclick="deletes(\''+ row.id +'\')">删除</a> ';  
                    		var d = '<a onclick="addCourse(\''+ row.id +'\')">添加</a> ';  
                         return e+d;  

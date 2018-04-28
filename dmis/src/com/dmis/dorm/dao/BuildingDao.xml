@@ -8,5 +8,27 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="getListQuery"  resultType="building">
 		select * from building
 	</select>
+	
+	
+	<select id="getBuildEntity" parameterType="Long" resultType="building">
+		select * from building where id=#{id}
+	</select>
 
+	
+	<select id="getBuildPipes" parameterType="Long" resultType="user">
+		select bp.id,u.name,u.sex,u.username  
+		from build_pipe bp 
+		left join user u on u.id=bp.uid 
+		where bp.buildId=#{buildId}
+	</select>
+	
+	<!-- 添加楼管 -->
+	<insert id="addBuildPipe" parameterType="java.util.Map">
+		insert into build_pipe(uid,buildId) 
+		values(#{uid},#{buildId})
+	</insert>
+	
+	<delete id="delBuildPipe" parameterType="Long">
+		delete from build_pipe where id=#{id}
+	</delete>
 </mapper>	

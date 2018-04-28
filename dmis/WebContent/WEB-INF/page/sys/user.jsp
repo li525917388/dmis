@@ -25,8 +25,10 @@
 		<button onclick="addClick()">新增</button>
 		<button onclick="editClick('edit')">修改</button>
 		<button onclick="delClick()">删除</button>
-		<button onclick="editClick('view')">查看</button>
+		<button onclick="editClick('view')" style="margin-right: 30px;">查看</button>
 
+		用户名：<input id="search_username" style="width: 100px;"> 
+		姓名：<input id="search_name" style="width: 100px;">
 		<button onclick="searchBtn()">搜索</button>
 	</div>
 	<table id="user_table"></table>
@@ -131,46 +133,54 @@
 		});
 	}
 		
-	$(function(){
-			 
-		$("#user_table").bootstrapTable({
-				//sidePagination:  "/cems/quality/getAllQuality.action", //服务端处理分页
-   			url: '${contextPath}/sys/user/getUsers',
-   			queryParamsType:'', //默认值为 'limit' ,在默认情况下 传给服务端的参数为：offset,limit,sort
-                                    // 设置为 ''  在这种情况下传给服务器的参数为：pageSize,pageNumber
-
-   			clickToSelect: true,//点击行即可选中单选/复选框
- 			striped: true,
-			pagination: true,
-			pageList: [10,20,50,100],
-            pageSize:10,
-            pageNumber:1,
-            sidePagination:'server',//设置为服务器端分页
-   			columns: [
-   				{checkbox: true}, 
-   				{field: 'id', title: 'id'}, 
-       			{field: 'username', title: '用户名'}, 
-    			{field: 'name', title: '姓名' },
-    			{field: 'sex', title: '性别',formatter:function(value,row,index){
-					return value==1 ? '<span class="label label-success">男</span>' : '<span class="label label-warning">女</span>';
-				}},
-    			{field: 'classId', title: '班级'}, 
-    			{field: 'headIcon', title: '头像' },
-    			{
-	                title: '操作',
-	                field: 'id',
-	                align: 'center',
-	                formatter:function(value,row,index){  
-                   		var e = '<a onclick="openUserMenu(\''+ row.id +'\')">授权</a> ';  
-                  	 	var d = '<a onclick="deletes(\''+ row.id +'\')">删除</a> ';  
-                   		var d = '<a onclick="addCourse(\''+ row.id +'\')">添加</a> ';  
-                        return e;  
-                 	} 
-            	}
-    		]	
-		});
-			
+	
+	function queryParams(params) {  //bootstrapTable自带参数 
+		
+		var temp = {   //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的  
+			pageSize: params.pageSize,   //页面大小  
+			pageNumber: params.pageNumber,  //页码  
+			username: $("#search_username").val(),
+			name: $("#search_name").val(),
+			sort: params.sort,  //排序列名  
+			sortOrder: params.order//排位命令（desc，asc）  
+		};  
+		
+		return temp;  
+	}  
+	 
+	$("#user_table").bootstrapTable({
+		//sidePagination:  "/cems/quality/getAllQuality.action", //服务端处理分页
+		url: '${contextPath}/sys/user/getUsers',
+		queryParamsType:'', //默认值为 'limit' ,在默认情况下 传给服务端的参数为：offset,limit,sort
+                                   // 设置为 ''  在这种情况下传给服务器的参数为：pageSize,pageNumber
+		queryParams: queryParams, //参数
+		clickToSelect: true,//点击行即可选中单选/复选框
+		striped: true,
+		pagination: true,
+		pageList: [10,20,50,100],
+		pageSize:10,
+		pageNumber:1,
+		sidePagination:'server',//设置为服务器端分页
+		columns: [
+			{checkbox: true}, 
+			{field: 'id', title: 'id'}, 
+   			{field: 'username', title: '用户名'}, 
+			{field: 'name', title: '姓名' },
+			{field: 'sex', title: '性别',formatter:function(value,row,index){
+				return value==1 ? '<span class="label label-success">男</span>' : '<span class="label label-warning">女</span>';
+			}},
+			{field: 'classId', title: '班级'}, 
+			{field: 'headIcon', title: '头像' },
+			{title: '操作',field: 'id',align: 'center',formatter:function(value,row,index){  
+           		var e = '<a onclick="openUserMenu(\''+ row.id +'\')">授权</a> ';  
+          	 	var d = '<a onclick="deletes(\''+ row.id +'\')">删除</a> ';  
+           		var d = '<a onclick="addCourse(\''+ row.id +'\')">添加</a> ';  
+                return e;  
+			}}
+   		]	
 	});
+			
+	
 
 			
 </script>
