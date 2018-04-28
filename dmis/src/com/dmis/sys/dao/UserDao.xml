@@ -50,7 +50,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			sex=#{sex},
 			classId=#{classId},
 			headIcon=#{headIcon}
-		where id=#{id},
+		where id=#{id}
 	</update>
 	
 	<!-- 删除角色 -->

@@ -133,8 +133,34 @@ public class UserAction {
 	 */
 	@RequestMapping("saveUser")
 	public void saveUser(HttpServletRequest request, HttpServletResponse response,User user) throws IOException{
+		User u = userService.getUserEntity(user.getId());
 		
-		int res = userService.saveUser(user);
+		if(user.getClassId() != null){
+			
+			u.setClassId(user.getClassId());
+		}
+		
+		if(user.getName() != null){
+			
+			u.setName(user.getName());
+		}
+		
+		if(user.getUsername() != null){
+			
+			u.setUsername(user.getUsername());
+		}
+		
+		if(user.getHeadIcon() != null){
+			
+			u.setHeadIcon(user.getHeadIcon());
+		}
+
+		if(user.getSex() != 0){
+			
+			u.setSex(user.getSex());
+		}
+		
+		int res = userService.saveUser(u);
 		
 		response.getWriter().print(res);
 	}

@@ -72,7 +72,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			roleName=#{roleName},
 			roleNo=#{roleNo},
 			summary=#{summary}
-		where id=#{id},
+		where id=#{id}
 	</update>
 	
 	<!-- 删除角色 -->
