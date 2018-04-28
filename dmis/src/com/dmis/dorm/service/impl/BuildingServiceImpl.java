@@ -11,6 +11,8 @@ import com.dmis.dorm.dao.BuildingDao;
 import com.dmis.dorm.entity.Building;
 import com.dmis.dorm.service.BuildingService;
 import com.dmis.sys.entity.User;
+import com.dmis.util.PageUtil;
+import com.dmis.util.ResultAndTotal;
 
 @Service
 public class BuildingServiceImpl implements BuildingService{
@@ -33,9 +35,13 @@ public class BuildingServiceImpl implements BuildingService{
 
 
 	@Override
-	public List<Building> getListQuery() {
-		// TODO Auto-generated method stub
-		return buildingDao.getListQuery();
+	public ResultAndTotal<Building> getListQuery(PageUtil pageUtil) {
+		ResultAndTotal<Building> res = new ResultAndTotal<Building>();
+		
+		res.setRows(buildingDao.getListQuery(pageUtil));
+		res.setTotal(buildingDao.getBuildTotal(pageUtil));
+		
+		return res;
 	}
 
 
@@ -68,6 +74,40 @@ public class BuildingServiceImpl implements BuildingService{
 	public int delBuildPipe(long id) {
 		// TODO Auto-generated method stub
 		return buildingDao.delBuildPipe(id);
+	}
+
+
+
+	@Override
+	public List<Building> getListAll() {
+		// TODO Auto-generated method stub
+		return buildingDao.getListAll();
+	}
+
+
+
+	@Override
+	public int saveBuild(Building building) {
+
+		if(building.getId() == null ) 
+			return buildingDao.addBuild(building);
+					
+		return buildingDao.updateBuild(building);
+	}
+
+
+
+	@Override
+	public int delBuilds(String ids) {
+		int res = 0;
+		
+		String[] idss = ids.split(",");
+		
+		for(String id : idss){
+			
+			res = buildingDao.delBuild(Long.valueOf(id));
+		}
+		return res;
 	}
 
 }

@@ -19,6 +19,12 @@ public class Building {
 	//名字
 	private String name;
 
+	//房间数
+	private int roomNum;
+
+	//楼层数
+	private int floorNum;
+
 	public Long getId() {
 		return id;
 	}
@@ -49,6 +55,22 @@ public class Building {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public int getRoomNum() {
+		return roomNum;
+	}
+
+	public void setRoomNum(int roomNum) {
+		this.roomNum = roomNum;
+	}
+
+	public int getFloorNum() {
+		return floorNum;
+	}
+
+	public void setFloorNum(int floorNum) {
+		this.floorNum = floorNum;
 	}
 	
 	

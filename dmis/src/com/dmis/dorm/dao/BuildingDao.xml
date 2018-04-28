@@ -5,10 +5,50 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="com.dmis.dorm.dao.BuildingDao">
 	
-	<select id="getListQuery"  resultType="building">
+	<select id="getListAll" resultType="building">
 		select * from building
 	</select>
 	
+	<!-- 获得角色列表 -->
+	<select id="getListQuery" parameterType="pageUtil" resultType="building">
+		select * from building
+		where 1=1 
+		<foreach collection="where" item="wh">
+			and ${wh.parm} ${wh.op} #{wh.value} 
+		</foreach>
+		limit #{start},#{pageSize}
+	</select>
+	
+	
+	<select id="getBuildTotal" parameterType="pageUtil"  resultType="Integer">
+		select count(*) from building
+		where 1=1 
+		<foreach collection="where" item="wh">
+			and ${wh.parm} ${wh.op} #{wh.value} 
+		</foreach>
+	</select>
+	
+	<!-- 新增菜角色-->
+	<insert id="addBuild" parameterType="building">
+		insert into building(no,name,type,roomNum,floorNum) 
+		values(#{no},#{name},#{type},#{roomNum},#{floorNum})
+	</insert>
+	
+	<!-- 更新角色 -->
+	<update id="updateBuild" parameterType="building">
+		update building set 
+			no=#{no},
+			name=#{name},
+			type=#{type},
+			roomNum=#{roomNum},
+			floorNum=#{floorNum}
+		where id=#{id},
+	</update>
+	
+	<!-- 删除角色 -->
+	<delete id="delBuild" parameterType="Long">
+		delete from building where id=#{id}
+	</delete>
 	
 	<select id="getBuildEntity" parameterType="Long" resultType="building">
 		select * from building where id=#{id}

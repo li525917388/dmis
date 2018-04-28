@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.dmis.dorm.entity.Building;
 import com.dmis.sys.entity.User;
+import com.dmis.util.PageUtil;
 
 /**
  * 楼宇dao
@@ -17,7 +18,17 @@ public interface BuildingDao {
 	 * 条件查询列表
 	 * @return
 	 */
-	public List<Building> getListQuery();
+	public List<Building> getListQuery(PageUtil pageUtil);
+	
+	public List<Building> getListAll();
+	
+	public int getBuildTotal(PageUtil pageUtil);
+	
+	public int addBuild(Building building);
+	
+	public int updateBuild(Building building);
+	
+	public int delBuild(long id);
 	
 	
 	/**

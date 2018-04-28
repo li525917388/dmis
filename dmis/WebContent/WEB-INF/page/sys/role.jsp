@@ -36,7 +36,7 @@
 	//新增
 	function addClick(){
 		
-		parent.layer.open({
+		layer.open({
 			type: 2,
 			title: '新增',
 			shadeClose: true,
@@ -56,7 +56,7 @@
 		
 		if(rows.length == 1){
 			
-			parent.layer.open({
+			layer.open({
 				type: 2,
 				title: '新增',
 				shadeClose: true,

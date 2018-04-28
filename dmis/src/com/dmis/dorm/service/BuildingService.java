@@ -5,6 +5,8 @@ import java.util.Map;
 
 import com.dmis.dorm.entity.Building;
 import com.dmis.sys.entity.User;
+import com.dmis.util.PageUtil;
+import com.dmis.util.ResultAndTotal;
 
 /**
  * 楼宇service
@@ -17,7 +19,19 @@ public interface BuildingService {
 	 * 条件查询列表
 	 * @return
 	 */
-	public List<Building> getListQuery();
+	public ResultAndTotal<Building> getListQuery(PageUtil pageUtil);
+	
+	
+	/**
+	 * 条件查询列表
+	 * @return
+	 */
+	public List<Building> getListAll();
+	
+	
+	public int saveBuild(Building building);
+	
+	public int delBuilds(String ids);
 	
 	
 	/**

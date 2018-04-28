@@ -16,6 +16,8 @@ import com.dmis.dorm.entity.Building;
 import com.dmis.dorm.service.BuildingService;
 import com.dmis.sys.entity.User;
 import com.dmis.util.GridView;
+import com.dmis.util.PageUtil;
+import com.dmis.util.ResultAndTotal;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -28,15 +30,19 @@ public class BuildingAction {
 	BuildingService buildingService;
 	
 	@RequestMapping("getBuildingList")
-	public void getBuildingList(HttpServletRequest request, HttpServletResponse response) throws IOException{
+	public void getBuildingList(HttpServletRequest request, HttpServletResponse response,int pageSize,int pageNumber) throws IOException{
 		response.setContentType("text/html;charset=utf-8");
 		
-		List<Building> list = buildingService.getListQuery();
+		PageUtil pageUtil = new PageUtil();
+		pageUtil.setPageSize(pageSize);
+		pageUtil.setPage(pageNumber);
+		
+		ResultAndTotal<Building> result = buildingService.getListQuery(pageUtil);
 		
 		GridView grid = new GridView();
 		
-		grid.setRows(list);
-		grid.setTotal(list.size());
+		grid.setRows(result.getRows());
+		grid.setTotal(result.getTotal());
 		
 		String json = JSONObject.fromObject(grid).toString();
 		
@@ -54,11 +60,55 @@ public class BuildingAction {
 		
 		response.setContentType("text/html;charset=utf-8");
 		
-		List<Building> list = buildingService.getListQuery();
+		List<Building> list = buildingService.getListAll();
 		
 		String json = JSONArray.fromObject(list).toString();
 		
 		response.getWriter().print(json);
+	}
+	
+	
+	/**
+	 * 
+	 * @param request
+	 * @param response
+	 * @throws IOException 
+	 */
+	@RequestMapping("toBuildingForm")
+	public String toBuildingForm(HttpServletRequest request, HttpServletResponse response) throws IOException{
+		
+		String id = request.getParameter("id");
+		String oper = request.getParameter("oper");
+		
+		if("edit".equals(oper) || "view".equals(oper)){
+			
+			Building building = buildingService.getBuildEntity(Long.valueOf(id));
+			
+			request.setAttribute("building", building);
+		}
+		
+		request.setAttribute("oper", oper);
+		
+		return "dorm/form/buildingForm";
+	}
+	
+	
+	
+	@RequestMapping("saveBuilding")
+	public void saveBuilding(HttpServletRequest request, HttpServletResponse response,Building building) throws IOException{
+		
+		int res = buildingService.saveBuild(building);
+		
+		response.getWriter().print(res);
+	}
+	
+	
+	@RequestMapping("delBuilding")
+	public void delBuilding(HttpServletRequest request, HttpServletResponse response,String ids) throws IOException{
+		
+		int res = buildingService.delBuilds(ids);
+		
+		response.getWriter().print(res);
 	}
 	
 	
